@@ -7,13 +7,16 @@
                 templateUrl: "/Pages/home.html"
             })
             .when("/Bonos", {
-                templateUrl: "/Pages/Bonos/index.html"
+                templateUrl: "/Pages/Bonos/bonos.html"
             })
             .when("/Productos", {
-                templateUrl: "/Pages/Productos/index.html"
+                templateUrl: "/Pages/Productos/productos.html"
+            })
+            .when("/Prueba404", {
+                templateUrl: "/Pages/404.html"
             })
             .otherwise({
-                redirectTo: "/"
+                redirectTo: "/Pages/404.html"
             });
     });
 })();
