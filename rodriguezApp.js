@@ -5,18 +5,47 @@
         $locationProvider.hashPrefix('');
     }]);
 
-    // app.config(function ($routeProvider) {
-    //     $routeProvider
-    //         .when("/", {
-    //             templateUrl: "/Pages/home.html"
-    //         })
-    //         .when("/Bonos", {
-    //             templateUrl: "/Pages/Bonos/index.html"
-    //         })
-    //         .when("/Productos", {
-    //             templateUrl: "/Pages/Productos/index.html"
-    //         })
-    // });
+    app.controller('homeController', function ($scope) {
+        $scope.pagina = "Dashboard";
+        $scope.sitio = "Control Panel";
+    });
+
+    app.controller('bonoController', function($scope){
+        $scope.pagina = "Bonos";
+        $scope.sitio = "Listado";
+        $scope.bonosList = bonos;
+    });
+
+    app.controller('productoController', function ($scope) {
+        $scope.pagina = "Productos";
+        $scope.sitio = "Listado";
+    });
 
 
+
+    // Objectos para prueba antes de que se inserte en la bd
+    var bonos = [{
+            'id': '134',
+            'remitente': 'Juan Perez',
+            'destinatario': 'Hector Gomez',
+            'fecha': '2016-03-21',
+            'monto': 4500.00,
+            'estado': 'Emitido'
+        },
+        {
+            'id': '134',
+            'remitente': 'Juan Perez',
+            'destinatario': 'Hector Gomez',
+            'fecha': '2016-03-21',
+            'monto': 4500.00,
+            'estado': 'Emitido'
+        },
+        {
+            'id': '134',
+            'remitente': 'Juan Perez',
+            'destinatario': 'Hector Gomez',
+            'fecha': '2016-03-21',
+            'monto': 4500.00,
+            'estado': 'Emitido'
+        }];
 })();

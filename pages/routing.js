@@ -4,13 +4,23 @@
     route.config(function ($routeProvider){
         $routeProvider
             .when("/", {
-                templateUrl: "/Pages/home.html"
+                templateUrl: "/Pages/home.html",
+                controller: 'homeController'
             })
+            // Routing para bono
             .when("/Bonos", {
-                templateUrl: "/Pages/Bonos/bonos.html"
+                templateUrl: "/Pages/Bonos/bonos.html",
+                controller: 'bonoController'
             })
+            .when("/Bonos/:id", {
+                templateUrl: "Pages/Bonos/bono.html",
+                controller: 'bonoController'
+            })
+            // Fin Routing para bono
             .when("/Productos", {
-                templateUrl: "/Pages/Productos/productos.html"
+                templateUrl: "/Pages/Productos/productos.html",
+                controller: 'productoController'
+
             })
             .when("/Prueba404", {
                 templateUrl: "/Pages/404.html"
