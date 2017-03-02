@@ -4,9 +4,16 @@
         <div class="box-header">
             <h3 class="box-title">Listado de Bonos Emitidos</h3>
         </div>
-        <div class="box-body">
-            <table id="bonos" class="table table-bordered table-striped">
+        <div class="box-body table-responsive">
+            <table class="table table-bordered table-striped">
                 <thead>
+                    <tr>
+                        <th>
+                            <div class="input-group col-md-4">
+                                <input type="text" class="form-control" ng-model="search" placeholder="Buscar...">
+                            </div>
+                        </th>
+                    </tr>
                     <tr>
                         <th class="text-center">Código</th>
                         <th class="text-center">Remitente</th>
@@ -19,7 +26,7 @@
                 </thead>
                 <!--Cuerpo de la tabla-->
                 <tbody>
-                    <tr ng-repeat="b in bonosList">
+                    <tr dir-paginate="b in bonosList | filter: search  | itemsPerPage: 10">
                         <td>{{b.id}}</td>
                         <td>{{b.remitente}}</td>
                         <td>{{b.destinatario}}</td>
@@ -34,6 +41,7 @@
                 </tbody>
                 <!--Fin cuerpo de la tabla-->
             </table>
+            <dir-pagination-controls></dir-pagination-controls>
         </div>
         <!--/.box-header-->
     </div>

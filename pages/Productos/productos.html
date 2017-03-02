@@ -1,16 +1,26 @@
 <content-header></content-header>
 <section class="content">
+
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title">Productos y Categorias Disponibles para Listas de Compras</h3>
         </div>
         <div class="box-body">
+
             <!--Productos-->
-            <div class="col-md-6" ng-controller="ModalDemoCtrl as $ctrl">
-                <button ng-click="$ctrl.open()" class="btn btn-success fa fa-plus">Agregar Producto</button>
-                <input type="text" name="searchProducto" value="">
+            <div class="col-md-6 table-responsive" ng-controller="ModalDemoCtrl as $ctrl">
                 <table id="productos" class="table table-bordered table-striped">
                     <thead>
+                        <tr>
+                            <th colspan="20">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-plus"></i>Nuevo Producto</button>
+                                </span>
+                                    <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchProducto">
+                                </div>
+                            </th>
+                        </tr>
                         <tr>
                             <th class="text-center">Código</th>
                             <th class="text-center">Nombre</th>
@@ -20,25 +30,32 @@
                     </thead>
                     <!--Cuerpo de la tabla-->
                     <tbody>
-                        <tr ng-repeat="p in productos">
-                            <td  class="text-center">{{p.id}}</td>
+                        <tr dir-paginate="p in productos | filter: searchProducto | itemsPerPage: 10" pagination-id="productos">
+                            <td class="text-center">{{p.id}}</td>
                             <td class="text-center">{{p.nombre}}</td>
                             <td class="text-center">{{p.categoria.descripcion}}</td>
                             <td class="text-center">{{p.medida.simbolo}}</td>
                         </tr>
                     </tbody>
                 </table>
+                <dir-pagination-controls pagination-id="productos"></dir-pagination-controls>
             </div>
             <!--Fin Productos-->
 
             <!--Categorias-->
             <div class="col-md-6">
-                <div class="row">
-                    <button ng-click="agregarCategoria()" class="btn btn-success fa fa-plus">Agregar Categoría</button>
-                    <input type="text" name="searchProducto" value="" class="text-rightui">
-                </div>
-                <table id="categorias" class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped">
                     <thead>
+                        <tr>
+                            <th colspan="20">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-plus"></i>Nueva Categoría</button>
+                                </span>
+                                    <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchCategoria">
+                                </div>
+                            </th>
+                        </tr>
                         <tr>
                             <th class="text-center">Código</th>
                             <th class="text-center">Nombre</th>
@@ -46,12 +63,13 @@
                     </thead>
                     <!--Cuerpo de la tabla-->
                     <tbody>
-                        <tr ng-repeat="c in categorias | orderBy:'descripcion'">
-                            <td  class="text-center">{{c.id}}</td>
-                            <td  class="text-center">{{c.descripcion}}</td>
+                        <tr dir-paginate="c in categorias | filter: searchCategoria | itemsPerPage: 10" pagination-id="categorias">
+                            <td class="text-center">{{c.id}}</td>
+                            <td class="text-center">{{c.descripcion}}</td>
                         </tr>
                     </tbody>
                 </table>
+                <dir-pagination-controls pagination-id="categorias"></dir-pagination-controls>
             </div>
             <!--Fin Categorias-->
         </div>
