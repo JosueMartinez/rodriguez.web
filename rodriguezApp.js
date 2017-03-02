@@ -1,5 +1,5 @@
 (function(){
-    var app = angular.module('rodriguezApp', ['directives', 'routing', 'ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+  var app = angular.module('rodriguezApp', ['directives', 'routing', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'angularUtils.directives.dirPagination']);
 
     app.config(['$locationProvider', function ($locationProvider) {
         $locationProvider.hashPrefix('');
@@ -32,13 +32,10 @@
         $http.get("http://rodriguez.api/api/categorias")
         .then(function(response) {
           $scope.categorias = response.data;
-          $log.info('categorias: ' + response.data);
+          console.log('categorias: ' + response.data);
         })
         .catch(function(response) {
           console.error('Error cargando categorias', response.status, response.data);
-        })
-        .finally(function() {
-          console.log("Categorias obtenidas");
         });
         //fin categorias
 
@@ -47,13 +44,10 @@
         $http.get("http://rodriguez.api/api/productos")
         .then(function(response) {
           $scope.productos = response.data;
-          $log.info('productos: ' + response.data);
+          console.log('productos: ' + response.data);
         })
         .catch(function(response) {
           console.error('Error cargando productos', response.status, response.data);
-        })
-        .finally(function() {
-          console.log("Productos obtenidos");
         });
         //fin productos
     });
@@ -153,15 +147,6 @@
       };
     });
 
-
-    // Objectos para prueba antes de que se inserte en la bd
-    var productos = [{id:1, nombre: "Mero", categoria:"Pescaderia"},
-        { id: 1, nombre: "Mero", categoria: "Pescaderia" },
-        { id: 1, nombre: "Pollo", categoria: "Carniceria" },
-        { id: 1, nombre: "Chuleta", categoria: "Carniceria" }];
-
-    var categorias = [{id: 1, nombre: "Pescaderia"},
-                     { id: 2, nombre: "Carniceria" }];
     var bonos = [{
 
             'id': '134',
