@@ -6,16 +6,15 @@
             <h3 class="box-title">Productos y Categorias Disponibles para Listas de Compras</h3>
         </div>
         <div class="box-body">
-
             <!--Productos-->
-            <div class="col-md-6 table-responsive" ng-controller="ModalDemoCtrl as $ctrl">
+            <div class="col-md-6 table-responsive">
                 <table id="productos" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th colspan="20">
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-plus"></i>Nuevo Producto</button>
+                                    <button class="btn btn-success" ng-click="modalProducto('/pages/Productos/nuevoProducto.html','md',{})" type="button"><i class="fa fa-plus"></i>Nuevo Producto</button>
                                 </span>
                                     <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchProducto">
                                 </div>
@@ -61,9 +60,10 @@
                             <th class="text-center">Nombre</th>
                         </tr>
                     </thead>
+                    {{getData()}}
                     <!--Cuerpo de la tabla-->
                     <tbody>
-                        <tr dir-paginate="c in categorias | filter: searchCategoria | itemsPerPage: 10" pagination-id="categorias">
+                        <tr dir-paginate="c in categorias | filter: searchCategoria| itemsPerPage: 10" pagination-id="categorias">
                             <td class="text-center">{{c.id}}</td>
                             <td class="text-center">{{c.descripcion}}</td>
                         </tr>

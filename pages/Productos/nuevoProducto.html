@@ -1,0 +1,52 @@
+<form name="agregarProducto" autocomplete="off" novalidate>
+    <div class="modal-content">
+        <div class="box box-success">
+            <div class="box-body" style="display: block; padding: 0;">
+                <!-- .modal-header -->
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$close()">
+                        <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                    </button>
+                    <h4 class="modal-title">Agregar Producto</h4>
+                </div>
+                <!-- /.modal-header -->
+
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <div class="col-xs-12">
+                            <div class="form-group">
+                                {{producto.test}}
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" placeholder="¿Cuál es el producto?" ng-model="producto.nombre" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Categoría</label>
+                                <select class="form-control" ng-options="o as o for o in ['test1','test2']" ng-model="producto.categoria">
+                                    <option value="">Seleccione una Categoría</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Medida</label>
+                                <select class="form-control" ng-options="o as o for o in ['test1','test2']" ng-model="producto.medida">
+                                    <option value="">Seleccione una Medida</option>
+                                </select>
+                            </div>
+
+                    </div>
+                </div>
+                <!-- /.modal-body -->
+
+                
+            </div>
+            <!-- .box-footer-->
+            <div class="box-footer">
+                <button type="button" class="btn btn-default pull-left" ng-click="$close()"><i class="fa fa-times"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary pull-right" ng-click="crearProducto()"><i class="fa fa-floppy-o"></i> Crear</button>
+            </div>
+            <!-- /. box-footer-->
+            
+        </div>
+    </div>
+</form>
