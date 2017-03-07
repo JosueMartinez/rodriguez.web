@@ -1,6 +1,7 @@
 (function () {
     var prod = angular.module('producto', []);
    
+//    Servicios para productos
     prod.service('productoServ', ['$http', function ($http) {
         
             this.obtenerCategorias = function () {
@@ -13,20 +14,20 @@
             this.obtenerProductos = function () {
                 return $http.get("http://rodriguez.api/api/productos")
                     .then(function (response) {
-                        productos = response.data;
-                        return productos;
+                        return response.data;
                     });
                 //fin productos
             };
 
-            this.print = function () {
-                return $http.get("http://rodriguez.api/api/values")
+            this.obtenerMedidas = function () {
+                return $http.get("http://rodriguez.api/api/medidas")
                     .then(function (response) {
                         return response.data;
                     });
-                
+                //fin medidas
             };
     }]);
+//   Fin de servicios para productos
 
     prod.controller('productoController', function ($scope, $uibModal, $log, $document, $http, productoServ) {
         $scope.pagina = "Productos & Categorias";
@@ -54,11 +55,18 @@
         };
     });
 
-    prod.controller('productoModalController', function ($uibModalInstance, $scope) {
+    prod.controller('productoModalController', function ($uibModalInstance, $scope, productoServ) {
+        //obteniendo categorias para poblar combobox
+        productoServ.obtenerCategorias().then(function(data){
+            $scope.categorias = data;
+        });
+        //obteniendo categorias para poblar combobox
+        productoServ.obtenerMedidas().then(function(data){
+            $scope.medidas = data;
+        });
 
-        this.crearProducto = function () {
+        $scope.crearProducto = function () {
             //TODO validation y crearProducto
-            console.log('crear producto');
             alert('test');
         };
     });

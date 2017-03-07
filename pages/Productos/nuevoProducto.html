@@ -22,14 +22,14 @@
 
                             <div class="form-group">
                                 <label>Categoría</label>
-                                <select class="form-control" ng-options="o as o for o in ['test1','test2']" ng-model="producto.categoria">
+                                <select class="form-control" ng-options="c as c.descripcion for c in categorias track by c.id" ng-model="producto.categoria">
                                     <option value="">Seleccione una Categoría</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label>Medida</label>
-                                <select class="form-control" ng-options="o as o for o in ['test1','test2']" ng-model="producto.medida">
+                                <label>Medida</label>{{categorias[0].id}}
+                                <select class="form-control" ng-options="m as m.descripcion for m in medidas track by m.id" ng-model="producto.medida">
                                     <option value="">Seleccione una Medida</option>
                                 </select>
                             </div>
