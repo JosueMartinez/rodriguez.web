@@ -1,4 +1,5 @@
-<form name="agregarProducto" autocomplete="off" novalidate>
+
+<form name="agregarProducto" autocomplete="off" ng-submit="agregarProducto.$valid && crearProducto()" novalidate>
     <div class="modal-content">
         <div class="box box-success">
             <div class="box-body" style="display: block; padding: 0;">
@@ -13,25 +14,33 @@
 
                 <!-- .modal-body -->
                 <div class="modal-body">
+                    <!--alerta de error-->
+                    <div class="alert alert-danger alert-dismissable" ng-show="agregarProducto.$submitted && !agregarProducto.$valid">
+                        <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Error!</strong> Corriga los errores antes de continuar.
+                    </div>
+                    <!-- / .alert-->
                     <div class="col-xs-12">
                             <div class="form-group">
-                                {{producto.test}}
                                 <label>Nombre</label>
-                                <input type="text" class="form-control" placeholder="¿Cuál es el producto?" ng-model="producto.nombre" required>
+                                <input type="text" name="nombre" class="form-control" placeholder="¿Cuál es el producto?" ng-model="producto.nombre" required>
+                                <span class="text-danger" ng-show="agregarProducto.nombre.$touched && agregarProducto.nombre.$invalid">Debe darle nombre al producto</span>
                             </div>
 
                             <div class="form-group">
                                 <label>Categoría</label>
-                                <select class="form-control" ng-options="c as c.descripcion for c in categorias track by c.id" ng-model="producto.categoria">
+                                <select name="categoria" class="form-control" ng-options="c as c.descripcion for c in categorias track by c.id" ng-model="producto.categoria">
                                     <option value="">Seleccione una Categoría</option>
                                 </select>
+                                <span class="text-danger" ng-show="agregarProducto.categoria.$touched && agregarProducto.$error.required">Debe elegir una categoría</span>
                             </div>
 
                             <div class="form-group">
-                                <label>Medida</label>{{categorias[0].id}}
-                                <select class="form-control" ng-options="m as m.descripcion for m in medidas track by m.id" ng-model="producto.medida">
+                                <label>Medida</label>
+                                <select name="medida" class="form-control" ng-options="m as m.descripcion for m in medidas track by m.id" ng-model="producto.medida" required>
                                     <option value="">Seleccione una Medida</option>
                                 </select>
+                                <span class="text-danger" ng-show="agregarProducto.medida.$touched && agregarProducto.medida.$error.required">Debe elegir la ud. de medida</span>
                             </div>
 
                     </div>
@@ -43,7 +52,7 @@
             <!-- .box-footer-->
             <div class="box-footer">
                 <button type="button" class="btn btn-default pull-left" ng-click="$close()"><i class="fa fa-times"></i> Cerrar</button>
-                <button type="button" class="btn btn-primary pull-right" ng-click="crearProducto()"><i class="fa fa-floppy-o"></i> Crear</button>
+                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Crear</button>
             </div>
             <!-- /. box-footer-->
             

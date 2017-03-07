@@ -55,7 +55,7 @@
         };
     });
 
-    prod.controller('productoModalController', function ($uibModalInstance, $scope, productoServ) {
+    prod.controller('productoModalController', function ($uibModalInstance, $scope, productoServ, $http) {
         //obteniendo categorias para poblar combobox
         productoServ.obtenerCategorias().then(function(data){
             $scope.categorias = data;
@@ -66,8 +66,20 @@
         });
 
         $scope.crearProducto = function () {
-            //TODO validation y crearProducto
-            alert('test');
+            
+            var producto = $scope.producto;
+            producto.medidaId = producto.medida.id;
+            producto.categoriaId = producto.categoria.id;
+            //hacer POST request
+            $http.post('http://rodriguez.api/api/productos',producto)
+                .then(function(response){
+                    console.log(response.data);
+                },function(response){
+                    console.log(response.data);
+                });
+
+
+            
         };
     });
 })();
