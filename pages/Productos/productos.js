@@ -42,9 +42,9 @@
         });
 
         //modal para agregar productoController
-        $scope.modalProducto = function (page, size, producto) {
+        $scope.modalProducto = function (page, size) {
 
-            $scope.modal = $uibModal.open({
+            $scope.modalProductoDia = $uibModal.open({
                 animation: true,
                 size: size,
                 templateUrl: page,
@@ -52,6 +52,33 @@
                 controller: 'productoModalController',
                 controllerAs: 'producto'
             });
+        };
+
+        //modal para agregar productoController
+        $scope.modalCategoria = function (page, size) {
+
+            $scope.modalCategoriaDia = $uibModal.open({
+                animation: true,
+                size: size,
+                templateUrl: page,
+                scope: $scope,
+                controller: 'categoriaModalController',
+                controllerAs: 'categoria'
+            });
+        };
+    });
+
+    prod.controller('categoriaModalController', function ($uibModalInstance, $scope, $http) {
+        $scope.crearCategoria = function(){
+            var categoria = $scope.categoria;
+            
+            //hacer POST request
+            $http.post('http://rodriguez.api/api/categorias',categoria)
+                .then(function(response){
+                    console.log(response.data);
+                },function(response){
+                    console.log(response.data);
+                });
         };
     });
 
@@ -64,12 +91,13 @@
         productoServ.obtenerMedidas().then(function(data){
             $scope.medidas = data;
         });
-
+        //creando el producto cuando se hace submit desde el modal
         $scope.crearProducto = function () {
             
             var producto = $scope.producto;
             producto.medidaId = producto.medida.id;
             producto.categoriaId = producto.categoria.id;
+
             //hacer POST request
             $http.post('http://rodriguez.api/api/productos',producto)
                 .then(function(response){
@@ -77,9 +105,8 @@
                 },function(response){
                     console.log(response.data);
                 });
-
-
-            
         };
     });
+
+
 })();
