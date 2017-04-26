@@ -2,17 +2,19 @@
     var prod = angular.module('producto', []);
    
 //    Servicios para productos
-    prod.service('productoServ', ['$http', function ($http) {
-        
+    prod.service('productoServ', ['$http', 'settings', function ($http, settings) {
+
             this.obtenerCategorias = function () {
-                return $http.get("http://rodriguez.api/api/categorias")
+                return $http.get(settings.baseUrl + "categorias")
                     .then(function (response) {
                         return response.data;
                     });
             };
+            //fin categorias
+            
 
             this.obtenerProductos = function () {
-                return $http.get("http://rodriguez.api/api/productos")
+                return $http.get(settings.baseUrl + "productos")
                     .then(function (response) {
                         return response.data;
                     });
@@ -20,7 +22,7 @@
             };
 
             this.obtenerMedidas = function () {
-                return $http.get("http://rodriguez.api/api/medidas")
+                return $http.get(settings.baseUrl + "medidas")
                     .then(function (response) {
                         return response.data;
                     });
@@ -34,10 +36,12 @@
         $scope.sitio = "este es el sitio";
         
         productoServ.obtenerCategorias().then(function(data){
-            $scope.categorias = data;
+            console.log(data);
+             $scope.categorias = data;
         });
 
         productoServ.obtenerProductos().then(function(data){
+            console.log(data);
             $scope.productos = data;
         });
 
@@ -68,28 +72,28 @@
         };
     });
 
-    prod.controller('categoriaModalController', function ($uibModalInstance, $scope, $http) {
+    prod.controller('categoriaModalController', ['settings', function ($uibModalInstance, $scope, $http, settings) {
         $scope.crearCategoria = function(){
             var categoria = $scope.categoria;
             
             //hacer POST request
-            $http.post('http://rodriguez.api/api/categorias',categoria)
+            $http.post(settings.baseUrl + 'categorias',categoria)
                 .then(function(response){
                     console.log(response.data);
                 },function(response){
                     console.log(response.data);
                 });
         };
-    });
+    }]);
 
-    prod.controller('productoModalController', function ($uibModalInstance, $scope, productoServ, $http) {
+    prod.controller('productoModalController', ['settings', function ($uibModalInstance, $scope, productoServ, $http, settings) {
         //obteniendo categorias para poblar combobox
         productoServ.obtenerCategorias().then(function(data){
-            $scope.categorias = data;
+            // $scope.categorias = data;
         });
         //obteniendo categorias para poblar combobox
         productoServ.obtenerMedidas().then(function(data){
-            $scope.medidas = data;
+            // $scope.medidas = data;
         });
         //creando el producto cuando se hace submit desde el modal
         $scope.crearProducto = function () {
@@ -99,14 +103,14 @@
             producto.categoriaId = producto.categoria.id;
 
             //hacer POST request
-            $http.post('http://rodriguez.api/api/productos',producto)
+            $http.post(settings.baseUrl + 'productos',producto)
                 .then(function(response){
                     console.log(response.data);
                 },function(response){
                     console.log(response.data);
                 });
         };
-    });
+    }]);
 
 
 })();

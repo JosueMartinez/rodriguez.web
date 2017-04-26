@@ -16,7 +16,7 @@
                                     <span class="input-group-btn">
                                     <button class="btn btn-success" ng-click="modalProducto('/pages/Productos/nuevoProducto.html','md',{})" type="button"><i class="fa fa-plus"></i>Nuevo Producto</button>
                                 </span>
-                                    <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchProducto">
+                                    <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchProducto.nombre">
                                 </div>
                             </th>
                         </tr>
@@ -51,7 +51,7 @@
                                     <span class="input-group-btn">
                                     <button class="btn btn-success" ng-click="modalCategoria('/pages/Productos/nuevaCategoria.html','md',{})" type="button"><i class="fa fa-plus"></i>Nueva Categoria</button>
                                 </span>
-                                    <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchCategoria">
+                                    <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchCategoria.descripcion">
                                 </div>
                             </th>
                         </tr>
@@ -60,10 +60,10 @@
                             <th class="text-center">Nombre</th>
                         </tr>
                     </thead>
-                    {{getData()}}
                     <!--Cuerpo de la tabla-->
                     <tbody>
-                        <tr dir-paginate="c in categorias | filter: searchCategoria| itemsPerPage: 10" pagination-id="categorias">
+                        <tr dir-paginate="c in categorias | filter: searchCategoria | itemsPerPage: 10" pagination-id="categorias">
+                        <!--<tr ng-repeat="c in categorias">-->
                             <td class="text-center">{{c.id}}</td>
                             <td class="text-center">{{c.descripcion}}</td>
                         </tr>
