@@ -1,5 +1,10 @@
 (function () {
-    var app = angular.module('rodriguezApp', ['producto','directives', 'routing', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'angularUtils.directives.dirPagination']);
+    var app = angular.module('rodriguezApp', ['producto', 'directives', 'routing', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'angularUtils.directives.dirPagination']);
+
+    app.constant("settings", {
+        "baseUrl": "http://smrodriguez.azurewebsites.net/api/",
+        "port": "80"
+    })
 
     app.config(['$locationProvider', function ($locationProvider) {
         $locationProvider.hashPrefix('');
