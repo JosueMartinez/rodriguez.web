@@ -14,7 +14,7 @@
             })
             .when("/Bonos/:id", {
                 templateUrl: "Pages/Bonos/bono.html",
-                controller: 'bonoController'
+                controller: 'bonoDetalleController'
             })
             // Fin Routing para bono
             .when("/Productos", {

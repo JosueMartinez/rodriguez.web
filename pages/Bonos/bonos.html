@@ -5,7 +5,7 @@
             <h3 class="box-title">Listado de Bonos Emitidos</h3>
         </div>
         <div class="box-body table-responsive">
-            <table class="table table-bordered table-striped">
+            <table id="expample1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th colspan="20">
@@ -18,7 +18,10 @@
                         <th class="text-center">Código</th>
                         <th class="text-center">Remitente</th>
                         <th class="text-center">Destinatario</th>
-                        <th class="text-center">Fecha</th>
+                        <th class="text-center">Cédula Destinatario</th>
+                        <th class="text-center">Fecha Compra</th>
+                        <th class="text-center">Monto</th>
+                        <th class="text-center">Tasa</th>
                         <th class="text-center">Monto RD$</th>
                         <th class="text-center">Estado</th>
                         <th class="text-center">Acciones</th>
@@ -26,16 +29,19 @@
                 </thead>
                 <!--Cuerpo de la tabla-->
                 <tbody>
-                    <tr dir-paginate="b in bonosList | filter: search  | itemsPerPage: 10">
-                        <td>{{b.id}}</td>
-                        <td>{{b.remitente}}</td>
-                        <td>{{b.destinatario}}</td>
-                        <td>{{b.fecha | date:'dd-MM-yyyy'}}</td>
-                        <td class="text-right">{{b.monto | currency}}</td>
-                        <td>{{b.estado}}</td>
-                        <td class="text-center"><a href="#/Bonos/{{b.id}}"><span class="fa fa-eye"></span></a> |
-                            <a href=""><span class="fa fa-pencil text-success"></span></a>|
-                            <a href=""><span class="fa fa-trash-o text-danger"></span></a>
+                    <tr dir-paginate="b in bonos | filter: search  | itemsPerPage: 10">
+                        <td class="text-center">{{b.id}}</td>
+                        <td class="text-center">{{b.cliente.nombreCompleto}}</td>
+                        <td class="text-center">{{b.nombreDestinoCompleto}}</td>
+                        <td class="text-center">{{b.cedulaDestino}}</td>  
+                        <td class="text-center">{{b.fechaCompra | date:'dd MMMM yyyy'}}</td>
+                        <td class="text-center">{{b.tasa.moneda.simbolo}} {{b.monto | currency}}</td>
+                        <td class="text-center">{{b.tasa.valor}}</td>
+                        <td class="text-center">RD$ {{ b.montoRd | currency}}</td>
+                        <td class="text-center">{{b.estadobono.descripcion}}</td>
+                        <td class="text-center"><a href="#/Bonos/{{b.id}}"><span class="fa fa-eye" title="Ver"></span></a> |
+                            <a href ng-click="modalPagar('/pages/Bonos/pagarBono.html','md',{})"><span class="fa fa-money text-success" title="Pagar"></span></a> |
+                            <a href=""><span class="fa fa-trash-o text-danger" title="Eliminar"></span></a>
                         </td>
                     </tr>
                 </tbody>
