@@ -28,6 +28,24 @@
                     });
                 //fin medidas
             };
+
+            this.guardarCategoria = function(categoria){
+                return $http.post(settings.baseUrl + 'categorias',categoria)
+                .then(function successCallback(response) {
+                    return  response;
+                }, function errorCallback(response) {
+                    return response;
+                });
+            };
+
+            this.guardarProducto = function(producto){
+                return $http.post(settings.baseUrl + 'productos',producto)
+                .then(function successCallback(response) {
+                    return  response;
+                }, function errorCallback(response) {
+                    return response;
+                });
+            }
     }]);
 //   Fin de servicios para productos
 
@@ -72,21 +90,24 @@
         };
     });
 
-    prod.controller('categoriaModalController', ['settings', function ($uibModalInstance, $scope, $http, settings) {
-        $scope.crearCategoria = function(){
-            var categoria = $scope.categoria;
-            
-            //hacer POST request
-            $http.post(settings.baseUrl + 'categorias',categoria)
+    prod.controller('categoriaModalController', function ($uibModalInstance, productoServ) {
+        var categoria = {};
+
+        this.crearCategoria = function(){
+            categoria.descripcion = this.descripcion;
+            console.log(categoria);
+            productoServ.guardarCategoria(categoria)
                 .then(function(response){
-                    console.log(response.data);
-                },function(response){
-                    console.log(response.data);
+                    if(response.status.toString().includes("20")){
+                        alert("Se ha creado la categoría");
+                    }else{
+                        alert(response.data.Message);
+                    }
                 });
         };
-    }]);
+    });
 
-    prod.controller('productoModalController', ['settings', function ($uibModalInstance, $scope, productoServ, $http, settings) {
+    prod.controller('productoModalController', function ($uibModalInstance,productoServ) {
         //obteniendo categorias para poblar combobox
         productoServ.obtenerCategorias().then(function(data){
             // $scope.categorias = data;
@@ -105,12 +126,10 @@
             //hacer POST request
             $http.post(settings.baseUrl + 'productos',producto)
                 .then(function(response){
-                    console.log(response.data);
-                },function(response){
-                    console.log(response.data);
+                    console.log(response);
                 });
         };
-    }]);
+    });
 
 
 })();
