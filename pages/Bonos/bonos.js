@@ -62,7 +62,7 @@
         var _getPayment = function(paymentId){
             var paypalToken = localStorageService.get('paypalAuthorization');
             if(!paypalToken){
-                paypalService.login().then(function(response){
+                _login().then(function(response){
                     paypalToken = response.data;
                 });
             }

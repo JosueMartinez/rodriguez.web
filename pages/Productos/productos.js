@@ -122,6 +122,7 @@
                 .then(function(response){
                     if(response.status.toString().includes("20")){
                         alert("Se ha creado la categoría");
+                        $uibModalInstance.close();
                     }else{
                         alert(response.data.Message);
                     }
@@ -150,6 +151,7 @@
             .then(function(response){
                 if(response.status.toString().includes("20")){
                     alert("Se ha creado el producto ");
+                    $uibModalInstance.close();
                 }else{
                     alert(response.data.Message);
                 }
