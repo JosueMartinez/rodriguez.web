@@ -83,19 +83,24 @@
         return paypalServiceFactory;
     }]);
 
-    bonos.controller('bonoController', function($scope, bonoServ){
+    bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location){
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
 
-        bonoServ.obtenerBonos().then(function (data) {
-            $scope.bonos = data;
-            $scope.bonos.forEach(function(element) {
-                element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
-                element.montoRd = element.monto * element.tasa.valor;
-            }, this);
-            
-        }); 
+        var authData = localStorageService.get('authorizationData');
+        if(authData){
+            bonoServ.obtenerBonos().then(function (data) {
+                $scope.bonos = data;
+                $scope.bonos.forEach(function(element) {
+                    element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
+                    element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
+                    element.montoRd = element.monto * element.tasa.valor;
+                }, this);
+
+            }); 
+        }else{
+            $location.path('/login');
+        }
     });
 
     bonos.controller('bonoDetalleController', function ($scope, $routeParams, bonoServ, $uibModal, paypalService, localStorageService){

@@ -2,36 +2,50 @@
     var prod = angular.module('producto', []);
    
 //    Servicios para productos
-    prod.service('productoServ', ['$http', 'settings', function ($http, settings) {
-
+    prod.service('productoServ', ['$http', 'settings', 'localStorageService', function ($http, settings, localStorageService) {
+            var authData = localStorageService.get('authorizationData');
             this.obtenerCategorias = function () {
-                return $http.get(settings.baseUrl + "categorias")
-                    .then(function (response) {
-                        return response.data;
-                    });
+                return  $http({
+                    method: 'GET',
+                    url: settings.baseUrl + "categorias",
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
+                }).then(function (response) {
+                    return response.data;
+                });
             };
             //fin categorias
             
 
-            this.obtenerProductos = function () {
-                return $http.get(settings.baseUrl + "productos")
-                    .then(function (response) {
-                        return response.data;
-                    });
+            this.obtenerProductos = function (authData) {
+
+                return $http({
+                    method: 'GET',
+                    url: settings.baseUrl + "productos",
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
+                }).then(function (response) {
+                    return response.data;
+                });
                 //fin productos
             };
 
             this.obtenerMedidas = function () {
-                return $http.get(settings.baseUrl + "medidas")
-                    .then(function (response) {
-                        return response.data;
-                    });
+                return $http({
+                    method: 'GET',
+                    url: settings.baseUrl + "medidas",
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
+                }).then(function (response) {
+                    return response.data;
+                });
                 //fin medidas
             };
 
             this.guardarCategoria = function(categoria){
-                return $http.post(settings.baseUrl + 'categorias',categoria)
-                .then(function successCallback(response) {
+                return $http({
+                    method: 'POST',
+                    url: settings.baseUrl + "categorias",
+                    data: categoria,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
+                }).then(function successCallback(response) {
                     return  response;
                 }, function errorCallback(response) {
                     return response;
@@ -39,8 +53,12 @@
             };
 
             this.guardarProducto = function(producto){
-                return $http.post(settings.baseUrl + 'productos',producto)
-                .then(function successCallback(response) {
+                return $http({
+                    method: 'POST',
+                    url: settings.baseUrl + "productos",
+                    data: producto,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
+                }).then(function successCallback(response) {
                     return  response;
                 }, function errorCallback(response) {
                     return response;
@@ -49,19 +67,23 @@
     }]);
 //   Fin de servicios para productos
 
-    prod.controller('productoController', function ($scope, $uibModal, $log, $document, $http, productoServ) {
+    prod.controller('productoController', function ($scope, $uibModal, $log, $document, $http, productoServ, localStorageService, $location) {
         $scope.pagina = "Productos & Categorias";
         $scope.sitio = "este es el sitio";
         
-        productoServ.obtenerCategorias().then(function(data){
-            console.log(data);
-             $scope.categorias = data;
-        });
+        var authData = localStorageService.get('authorizationData');
+        if(authData){
+            productoServ.obtenerCategorias(authData).then(function(data){
+                 $scope.categorias = data;
+            });
 
-        productoServ.obtenerProductos().then(function(data){
-            console.log(data);
-            $scope.productos = data;
-        });
+            productoServ.obtenerProductos(authData).then(function(data){
+                $scope.productos = data;
+            });
+        }else{
+            $location.path('/login');
+        }
+        
 
         //modal para agregar productoController
         $scope.modalProducto = function (page, size) {
@@ -107,14 +129,14 @@
         };
     });
 
-    prod.controller('productoModalController', function ($uibModalInstance,productoServ) {
+    prod.controller('productoModalController', function ($uibModalInstance, productoServ, $scope, $http, settings) {
         //obteniendo categorias para poblar combobox
         productoServ.obtenerCategorias().then(function(data){
             // $scope.categorias = data;
         });
         //obteniendo categorias para poblar combobox
         productoServ.obtenerMedidas().then(function(data){
-            // $scope.medidas = data;
+            $scope.medidas = data;
         });
         //creando el producto cuando se hace submit desde el modal
         $scope.crearProducto = function () {
@@ -124,10 +146,14 @@
             producto.categoriaId = producto.categoria.id;
 
             //hacer POST request
-            $http.post(settings.baseUrl + 'productos',producto)
-                .then(function(response){
-                    console.log(response);
-                });
+            productoServ.guardarProducto(producto)
+            .then(function(response){
+                if(response.status.toString().includes("20")){
+                    alert("Se ha creado el producto ");
+                }else{
+                    alert(response.data.Message);
+                }
+            });
         };
     });
 

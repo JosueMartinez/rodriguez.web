@@ -1,10 +1,14 @@
 (function(){
-    var route = angular.module('routing', ['ngRoute','LocalStorageModule']);
+    var route = angular.module('routing', ['ngRoute', 'ui.router','LocalStorageModule']);
+
+    route.config(function($stateProvider){
+
+    });
 
     route.config(function ($routeProvider){
         $routeProvider.when("/", {
-            templateUrl: "/Pages/home.html",
-            controller: 'homeController'
+            templateUrl: "/Pages/Bonos/bonos.html",
+            controller: 'bonoController'
         })
         .when("/login",{
             templateUrl: "/Pages/Login/login.html",
