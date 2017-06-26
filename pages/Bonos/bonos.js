@@ -32,56 +32,56 @@
 
     }]);
 
-    app.factory('paypalService', ['$http', '$q', 'localStorageService', 'settings', '$base64', function ($http, $q, localStorageService, settings, $base64){
-        var serviceBase = settings.PayPalApiUrl;
-        var clienteId = settings.PayPalClientId;
-        var apiSecret = settings.PayPalSecret;
-        var paypalServiceFactory = {};
+    // app.factory('paypalService', ['$http', '$q', 'localStorageService', 'settings', '$base64', function ($http, $q, localStorageService, settings, $base64){
+    //     var serviceBase = settings.PayPalApiUrl;
+    //     var clienteId = settings.PayPalClientId;
+    //     var apiSecret = settings.PayPalSecret;
+    //     var paypalServiceFactory = {};
 
-        var _login = function (loginData) {
-            var auth = $base64.encode(clienteId + ":" + apiSecret);
-            var data = {"grant_type": "client_credentials"};
-            var deferred = $q.defer();
+    //     var _login = function (loginData) {
+    //         var auth = $base64.encode(clienteId + ":" + apiSecret);
+    //         var data = {"grant_type": "client_credentials"};
+    //         var deferred = $q.defer();
 
-            $http({
-                method: 'POST',
-                url: serviceBase + 'oauth2/token?grant_type=client_credentials',
-                // data: data,
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization':'Basic ' + auth}
-            }).then(function(response){
-                localStorageService.set('paypalAuthorization', { token: response.data.access_token});
-                // console.log(response.data.access_token);
-                    // deferred.resolve(response);
-            },function(response){
-                    // deferred.reject(response);
-            });
+    //         $http({
+    //             method: 'POST',
+    //             url: serviceBase + 'oauth2/token?grant_type=client_credentials',
+    //             // data: data,
+    //             headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization':'Basic ' + auth}
+    //         }).then(function(response){
+    //             localStorageService.set('paypalAuthorization', { token: response.data.access_token});
+    //             // console.log(response.data.access_token);
+    //                 // deferred.resolve(response);
+    //         },function(response){
+    //                 // deferred.reject(response);
+    //         });
 
-            return deferred.promise;
-        };
+    //         return deferred.promise;
+    //     };
 
-        var _getPayment = function(paymentId){
-            var paypalToken = localStorageService.get('paypalAuthorization');
-            if(!paypalToken){
-                _login().then(function(response){
-                    paypalToken = response.data;
-                });
-            }
+    //     var _getPayment = function(paymentId){
+    //         var paypalToken = localStorageService.get('paypalAuthorization');
+    //         if(!paypalToken){
+    //             _login().then(function(response){
+    //                 paypalToken = response.data;
+    //             });
+    //         }
 
-            return $http({
-                        method: 'GET',
-                        url: serviceBase + 'payments/payment/' + paymentId,
-                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + paypalToken.token}
-                    }).then(function (response) {
-                        console.log(response.data);
-                        return response.data;
-                    });
-        }
+    //         return $http({
+    //                     method: 'GET',
+    //                     url: serviceBase + 'payments/payment/' + paymentId,
+    //                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + paypalToken.token}
+    //                 }).then(function (response) {
+    //                     console.log(response.data);
+    //                     return response.data;
+    //                 });
+    //     }
 
-        paypalServiceFactory.login = _login;
-        paypalServiceFactory.getPayment = _getPayment;
+    //     paypalServiceFactory.login = _login;
+    //     paypalServiceFactory.getPayment = _getPayment;
 
-        return paypalServiceFactory;
-    }]);
+    //     return paypalServiceFactory;
+    // }]);
 
     bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location){
         $scope.pagina = "Bonos Emitidos";
@@ -103,7 +103,7 @@
         }
     });
 
-    bonos.controller('bonoDetalleController', function ($scope, $routeParams, bonoServ, $uibModal, paypalService, localStorageService){
+    bonos.controller('bonoDetalleController', function ($scope, $routeParams, bonoServ, $uibModal, localStorageService){
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
         $scope.bono = {};
@@ -112,7 +112,7 @@
         bonoServ.detalleBono($routeParams.id).then(function(data){
              
             $scope.bono = data;
-            $scope.bono.metodoPago = paypalService.getPayment($scope.bono.paypalId);
+            // $scope.bono.metodoPago = paypalService.getPayment($scope.bono.paypalId);
             $scope.bono.cliente.nombreCompleto = $scope.bono.cliente.nombres + ' ' + $scope.bono.cliente.apellidos;
             $scope.bono.nombreDestinoCompleto = $scope.bono.nombreDestino + ' ' + $scope.bono.apellidoDestino;
             $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
