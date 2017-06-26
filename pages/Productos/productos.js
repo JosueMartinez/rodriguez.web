@@ -112,7 +112,7 @@
         };
     });
 
-    prod.controller('categoriaModalController', function ($uibModalInstance, productoServ) {
+    prod.controller('categoriaModalController', function ($uibModalInstance, productoServ, $scope) {
         var categoria = {};
 
         this.crearCategoria = function(){
@@ -121,7 +121,8 @@
             productoServ.guardarCategoria(categoria)
                 .then(function(response){
                     if(response.status.toString().includes("20")){
-                        alert("Se ha creado la categoría");
+                        alert("Se ha creado la categoría " + response.data.descripcion);
+                        $scope.categorias.push(response.data);
                         $uibModalInstance.close();
                     }else{
                         alert(response.data.Message);
@@ -150,7 +151,8 @@
             productoServ.guardarProducto(producto)
             .then(function(response){
                 if(response.status.toString().includes("20")){
-                    alert("Se ha creado el producto ");
+                    alert("Se ha creado el producto " + response.data.nombre);
+                    $scope.categorias.push(response.data);
                     $uibModalInstance.close();
                 }else{
                     alert(response.data.Message);
