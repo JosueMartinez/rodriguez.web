@@ -39,7 +39,7 @@
                         <td class="text-center">{{b.tasa.valor}}</td>
                         <td class="text-center">RD$ {{ b.montoRd | currency}}</td>
                         <td class="text-center">{{b.estadobono.descripcion}}</td>
-                        <td class="text-center"><a href="#/Bonos/{{b.id}}"><span class="fa fa-eye" title="Ver"></span></a> |
+                        <td class="text-center"><a ui-sref="master.bonoDetail({id: b.id})" ><span class="fa fa-eye" title="Ver"></span></a> |
                             <a href ng-click="modalPagar('/pages/Bonos/pagarBono.html','md',{})"><span class="fa fa-money text-success" title="Pagar"></span></a> |
                             <a href=""><span class="fa fa-trash-o text-danger" title="Eliminar"></span></a>
                         </td>

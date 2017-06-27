@@ -22,9 +22,9 @@
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input type="text" name="nombre" class="form-control" placeholder="¿Cuál es la categoria?" ng-model="categoria.descripcion"
+                            <input type="text" name="descripcion" class="form-control" placeholder="¿Cuál es la categoria?" ng-model="categoria.descripcion"
                                 required>
-                            <span class="text-danger" ng-show="agregarCategoria.descripcion.$touched && agregarCategoria.descripcion.$invalid">Debe darle nombre a la categoria</span>
+                            <span class="text-danger" ng-show="agregarCategoria.$submitted && !agregarCategoria.descripcion.$valid">Debe darle nombre a la categoria</span>
                         </div>
                     </div>
                 </div>

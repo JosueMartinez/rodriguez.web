@@ -25,6 +25,7 @@
                             <th class="text-center">Nombre</th>
                             <th class="text-center">Categoria</th>
                             <th class="text-center">Ud. Medida</th>
+                            <th class="text-center"></th>
                         </tr>
                     </thead>
                     <!--Cuerpo de la tabla-->
@@ -34,6 +35,10 @@
                             <td class="text-center">{{p.nombre}}</td>
                             <td class="text-center">{{p.categoria.descripcion}}</td>
                             <td class="text-center">{{p.medida.simbolo}}</td>
+                            <td>
+                                <button ng-click="borrar(p.id)">Delete</button> | 
+                                <button ng-click="editar(p.id)">Edit</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

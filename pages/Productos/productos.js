@@ -63,7 +63,11 @@
                 }, function errorCallback(response) {
                     return response;
                 });
-            }
+            };
+
+            this.borrarProducto = function(id){
+                console.log('borrar');
+            };
     }]);
 //   Fin de servicios para productos
 
@@ -84,6 +88,11 @@
             $location.path('/login');
         }
         
+        $scope.borrar = function(id){
+            productoServ.borrarProducto()/*.then(function(){
+                console.log('ya terminó');
+            });*/
+        };
 
         //modal para agregar productoController
         $scope.modalProducto = function (page, size) {
@@ -136,10 +145,12 @@
         productoServ.obtenerCategorias().then(function(data){
             // $scope.categorias = data;
         });
+
         //obteniendo categorias para poblar combobox
         productoServ.obtenerMedidas().then(function(data){
             $scope.medidas = data;
         });
+
         //creando el producto cuando se hace submit desde el modal
         $scope.crearProducto = function () {
             
@@ -152,7 +163,7 @@
             .then(function(response){
                 if(response.status.toString().includes("20")){
                     alert("Se ha creado el producto " + response.data.nombre);
-                    $scope.categorias.push(response.data);
+                    $scope.productos.push(response.data);
                     $uibModalInstance.close();
                 }else{
                     alert(response.data.Message);
