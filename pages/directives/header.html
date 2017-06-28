@@ -96,24 +96,23 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="dist/img/avatar.png" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Usuario</span>
+                        <!--<img src="dist/img/avatar.png" class="user-image" alt="User Image">-->
+                        <i class="fa fa-user" />
+                        <span class="hidden-xs">{{authentication.userName}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="dist/img/avatar.png" class="img-circle" alt="User Image">
-
+                            <!--<img src="dist/img/avatar.png" class="img-circle" alt="User Image">-->
+                            
                             <p>
                                  {{authentication.userName}}
-                                <small>rol</small>
+                                <small>{{authentication.rol}}</small>
                             </p>
+                            <i class="fa fa-user fa-4x" />
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="" class="btn btn-default btn-flat">Perfil</a>
-                            </div>
                             <div class="pull-right">
                                 <a href="" class="btn btn-default btn-flat" data-ng-click="logOut()">Salir</a>
                             </div>

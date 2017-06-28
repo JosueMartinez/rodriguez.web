@@ -66,12 +66,22 @@
             };
 
             this.borrarProducto = function(id){
-                console.log('borrar');
+                return $http({
+                    method: 'DELETE',
+                    url: settings.baseUrl + "productos/" + id,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
+                }).then(function successCallback(response) {
+                    alert("Se ha borrado el producto " + response.nombre);
+                    return  response;
+                }, function errorCallback(response) {
+                    alert("El producto esta siendo usado en listas de compras y no se puede borrar");
+                    return response;
+                });
             };
     }]);
 //   Fin de servicios para productos
 
-    prod.controller('productoController', function ($scope, $uibModal, $log, $document, $http, productoServ, localStorageService, $location) {
+    prod.controller('productoController', function ($scope, $uibModal, $log, $document, $http, productoServ, localStorageService, $location, $window) {
         $scope.pagina = "Productos & Categorias";
         $scope.sitio = "este es el sitio";
         
@@ -89,9 +99,14 @@
         }
         
         $scope.borrar = function(id){
-            productoServ.borrarProducto()/*.then(function(){
-                console.log('ya terminó');
-            });*/
+            var confirmar = $window.confirm("¿Seguro de querer borrar el producto?");
+            if(confirmar){
+                productoServ.borrarProducto(id).then(function(data){
+                    productoServ.obtenerProductos(authData).then(function(data){
+                        $scope.productos = data;
+                    });
+                });
+            }
         };
 
         //modal para agregar productoController

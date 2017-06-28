@@ -36,8 +36,8 @@
                             <td class="text-center">{{p.categoria.descripcion}}</td>
                             <td class="text-center">{{p.medida.simbolo}}</td>
                             <td>
-                                <button ng-click="borrar(p.id)">Delete</button> | 
-                                <button ng-click="editar(p.id)">Edit</button>
+                                <a ng-click="borrar(p.id)" class="fa fa-trash text-danger"></a> | 
+                                <a ng-click="editar(p.id)" class="fa fa-pencil text-primary"></a>
                             </td>
                         </tr>
                     </tbody>
