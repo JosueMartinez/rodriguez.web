@@ -30,6 +30,23 @@
             }
         }
 
+        this.pagarBono = function(id){
+            var authData = localStorageService.get('authorizationData');
+            if(authData){
+                return $http({
+                    method: 'PUT',
+                    url: settings.baseUrl + "bonos/" + id + "/pagar",
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
+                }).then(function (response){
+                    alert("Se ha pagado el bono");
+                    return response.data;
+                }, function(response){
+                    alert("Ha ocurrido un error");
+                    return responsa.data;
+                });
+            }
+        }
+
     }]);
 
     // app.factory('paypalService', ['$http', '$q', 'localStorageService', 'settings', '$base64', function ($http, $q, localStorageService, settings, $base64){
@@ -83,7 +100,7 @@
     //     return paypalServiceFactory;
     // }]);
 
-    bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location){
+    bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location, $window){
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
 
@@ -100,6 +117,17 @@
             }); 
         }else{
             $location.path('/login');
+        }
+
+        $scope.pagarBono = function(id){
+            var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
+            if(confirmar){
+                bonoServ.pagarBono(id).then(function(data){
+                    bonoServ.obtenerBonos(authData).then(function(data){
+                        $scope.bonos = data;
+                    });
+                });
+            }
         }
     });
 
