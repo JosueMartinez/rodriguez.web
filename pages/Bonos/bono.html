@@ -101,9 +101,11 @@
             </div>-->
         </div>
         </div>
-        <div class="row col-md-offset-1">
-            <button class="btn btn-success btn-sm fa fa-money" ng-click="modalPagar('/pages/Bonos/pagarBono.html','md',{})">  Pagar</button>
-            <button class="btn btn-danger btn-sm fa fa-trash-o" ng-click="eliminar()">  Eliminar</button>
+        <div ng-show="bono.estadobono.descripcion === 'Comprado'" class="row col-md-offset-1">
+            <button class="btn btn-success btn-lg fa fa-money" ng-click="pagarBono(bono.id)">  Pagar</button>
+        </div>
+        <div ng-show="bono.estadobono.descripcion === 'Cobrado'" class="row col-md-offset-1">
+            <button class="btn btn-warning btn-lg fa fa-print" ng-click="imprimirTicket(bono.id)">  Imprimir Ticket</button>
         </div>
     </form>
 </section>

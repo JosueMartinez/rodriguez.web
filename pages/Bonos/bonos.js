@@ -3,7 +3,9 @@
 
     //Servicio para bonos
     bonos.service('bonoServ', ['$http', 'settings', 'localStorageService' , function ($http, settings,localStorageService) {
-        this.obtenerBonos = function(){
+
+    var functions = { 
+        obtenerBonos : function(){
             var authData = localStorageService.get('authorizationData');
             if(authData){
                 return $http({
@@ -14,9 +16,9 @@
                     return response.data;
                 });
             }
-        };
+        },
 
-        this.obtenerBonosPagados = function(){
+        obtenerBonosPagados : function(){
             var authData = localStorageService.get('authorizationData');
             if(authData){
                 return $http({
@@ -28,9 +30,9 @@
                 });
             }
 
-        }
+        },
 
-        this.detalleBono = function(id){
+        detalleBono : function(id){
             var authData = localStorageService.get('authorizationData');
             if(authData){
                 return $http({
@@ -41,9 +43,13 @@
                     return response.data;
                 });
             }
-        }
+        },
 
-        this.pagarBono = function(id){
+        imprimirTicket :  function(id){
+            alert('mandando a imprimir');
+        },
+
+        pagarBono : function(id){
             var authData = localStorageService.get('authorizationData');
             if(authData){
                 return $http({
@@ -52,13 +58,17 @@
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
                 }).then(function (response){
                     alert("Se ha pagado el bono");
+                    functions.imprimirTicket(id);
                     return response.data;
                 }, function(response){
                     alert("Ha ocurrido un error");
-                    return responsa.data;
+                    return response.data;
                 });
             }
         }
+    }
+
+    return functions;
 
     }]);
 
@@ -110,14 +120,23 @@
                     });
                 });
             }
+        };
+
+        $scope.imprimirTicket = function(id){
+            var confirmar = $window.confirm("¿Seguro de querer imprimir el recibo?");
+            if(confirmar){
+                bonoServ.imprimirTicket(id);
+            }
         }
+
+
     });
 
-    bonos.controller('bonoDetalleController', function ($scope, $stateParams, bonoServ, $uibModal, localStorageService){
+    bonos.controller('bonoDetalleController', function ($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window){
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
         $scope.bono = {};
-        
+        var authData = localStorageService.get('authorizationData');
         
         bonoServ.detalleBono($stateParams.id).then(function(data){
              
@@ -128,17 +147,23 @@
             $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
         });
 
-        $scope.modalPagar = function (page, size) {
-
-            $scope.modalPagarBono = $uibModal.open({
-                animation: true,
-                size: size,
-                templateUrl: page,
-                scope: $scope,
-                controller: 'bonoDetalleController',
-                controllerAs: 'bono'
-            });
+        $scope.pagarBono = function(id){
+            var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
+            if(confirmar){
+                bonoServ.pagarBono(id).then(function(data){
+                    bonoServ.detalleBono(id).then(function(data){
+                        $scope.bono = data;
+                    });
+                });
+            }
         };
+
+        $scope.imprimirTicket = function(id){
+            var confirmar = $window.confirm("¿Seguro de querer imprimir el recibo?");
+            if(confirmar){
+                bonoServ.imprimirTicket(id);
+            }
+        }
     });
 })();
 
