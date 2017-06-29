@@ -1,54 +1,113 @@
 <content-header></content-header>
 <section class="content">
-    <div class="box box-primary">
-        <div class="box-header">
-            <h3 class="box-title">Listado de Bonos Emitidos</h3>
-        </div>
-        <div class="box-body table-responsive">
-            <table id="expample1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th colspan="20">
-                            <div class="input-group">
-                                <input type="text" class="form-control" ng-model="search" placeholder="Buscar...">
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="text-center">Código</th>
-                        <th class="text-center">Remitente</th>
-                        <th class="text-center">Destinatario</th>
-                        <th class="text-center">Cédula Destinatario</th>
-                        <th class="text-center">Fecha Compra</th>
-                        <th class="text-center">Monto</th>
-                        <th class="text-center">Tasa</th>
-                        <th class="text-center">Monto RD$</th>
-                        <th class="text-center">Estado</th>
-                        <th class="text-center">Acciones</th>
-                    </tr>
-                </thead>
-                <!--Cuerpo de la tabla-->
-                <tbody>
-                    <tr dir-paginate="b in bonos | filter: search  | itemsPerPage: 10">
-                        <td class="text-center">{{b.id}}</td>
-                        <td class="text-center">{{b.cliente.nombreCompleto}}</td>
-                        <td class="text-center">{{b.nombreDestinoCompleto}}</td>
-                        <td class="text-center">{{b.cedulaDestino}}</td>  
-                        <td class="text-center">{{b.fechaCompra | date:'dd MMMM yyyy'}}</td>
-                        <td class="text-center">{{b.tasa.moneda.simbolo}} {{b.monto | currency}}</td>
-                        <td class="text-center">{{b.tasa.valor}}</td>
-                        <td class="text-center">RD$ {{ b.montoRd | currency}}</td>
-                        <td class="text-center">{{b.estadobono.descripcion}}</td>
-                        <td class="text-center"><a ui-sref="master.bonoDetail({id: b.id})" ><span class="fa fa-eye" title="Ver"></span></a> |
-                            <a href ng-click="pagarBono(b.id)"><span class="fa fa-money text-success" title="Pagar"></span></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <!--Fin cuerpo de la tabla-->
-            </table>
-            <dir-pagination-controls></dir-pagination-controls>
-        </div>
-        <!--/.box-header-->
-    </div>
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="Activos">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Listado de Bonos Emitidos</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table id="bonos" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="20">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="search" placeholder="Buscar...">
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Código</th>
+                                <th class="text-center">Remitente</th>
+                                <th class="text-center">Destinatario</th>
+                                <th class="text-center">Cédula Destinatario</th>
+                                <th class="text-center">Fecha Compra</th>
+                                <th class="text-center">Monto</th>
+                                <th class="text-center">Tasa</th>
+                                <th class="text-center">Monto RD$</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <!--Cuerpo de la tabla-->
+                        <tbody>
+                            <tr dir-paginate="b in bonos | filter: search  | itemsPerPage: 10"  pagination-id="bonos">
+                                <td class="text-center">{{b.id}}</td>
+                                <td class="text-center">{{b.cliente.nombreCompleto}}</td>
+                                <td class="text-center">{{b.nombreDestinoCompleto}}</td>
+                                <td class="text-center">{{b.cedulaDestino}}</td>  
+                                <td class="text-center">{{b.fechaCompra | date:'dd MMMM yyyy'}}</td>
+                                <td class="text-center">{{b.tasa.moneda.simbolo}} {{b.monto | currency}}</td>
+                                <td class="text-center">{{b.tasa.valor}}</td>
+                                <td class="text-center">RD$ {{ b.montoRd | currency}}</td>
+                                <td class="text-center">{{b.estadobono.descripcion}}</td>
+                                <td class="text-center"><a ui-sref="master.bonoDetail({id: b.id})" ><span class="fa fa-eye" title="Ver"></span></a> |
+                                    <a href ng-click="pagarBono(b.id)"><span class="fa fa-money text-success" title="Pagar"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!--Fin cuerpo de la tabla-->
+                    </table>
+                    <dir-pagination-controls  pagination-id="bonos"></dir-pagination-controls>
+                </div>
+                <!--/.box-header-->
+            </div>
+        </uib-tab>
+
+        <!--Bonos Pagados-->
+        <uib-tab index="1" heading="Pagados" select="obtenerPagados()">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Listado de Bonos Pagados</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table id="bonosPagados" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="20">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="searchPagados" placeholder="Buscar...">
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Código</th>
+                                <th class="text-center">Remitente</th>
+                                <th class="text-center">Destinatario</th>
+                                <th class="text-center">Cédula Destinatario</th>
+                                <th class="text-center">Fecha Compra</th>
+                                <th class="text-center">Monto</th>
+                                <th class="text-center">Tasa</th>
+                                <th class="text-center">Monto RD$</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <!--Cuerpo de la tabla-->
+                        <tbody>
+                            <tr dir-paginate="b in bonosPagados | filter: searchPagados  | itemsPerPage: 10"  pagination-id="pagados">
+                                <td class="text-center">{{b.id}}</td>
+                                <td class="text-center">{{b.cliente.nombreCompleto}}</td>
+                                <td class="text-center">{{b.nombreDestinoCompleto}}</td>
+                                <td class="text-center">{{b.cedulaDestino}}</td>  
+                                <td class="text-center">{{b.fechaCompra | date:'dd MMMM yyyy'}}</td>
+                                <td class="text-center">{{b.tasa.moneda.simbolo}} {{b.monto | currency}}</td>
+                                <td class="text-center">{{b.tasa.valor}}</td>
+                                <td class="text-center">RD$ {{ b.montoRd | currency}}</td>
+                                <td class="text-center">{{b.estadobono.descripcion}}</td>
+                                <td class="text-center">
+                                    <a ui-sref="master.bonoDetail({id: b.id})" ><span class="fa fa-eye" title="Ver"></span></a> |
+                                    <a href ng-click="pagarBono(b.id)"><span class="fa fa-print text-warning" title="Imprimir Recibo"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!--Fin cuerpo de la tabla-->
+                    </table>
+                    <dir-pagination-controls  pagination-id="pagados"></dir-pagination-controls>
+                </div>
+                <!--/.box-header-->
+            </div>
+        </uib-tab>
+    </uib-tabset>
     <!--/.box-->
 </section>
