@@ -32,12 +32,12 @@
                                         <div class="pull-left">
                                             <div class="input-group input-group-sm  col-xs-12">
                                               <span class="input-group-addon" id="basic-addon1">{{t.moneda.simbolo}}</span>
-                                              <input type="number" class="form-control" ng-model="tasaInput" aria-describedby="basic-addon1">
+                                              <input type="number" class="form-control text-center" ng-model="tasaInput" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
                                         <div class="input-group input-group-sm col-xs-12">
                                           <span class="input-group-addon" id="basic-addon1">RD$</span>
-                                          <input type="text" class="form-control" value="{{tasaInput * t.valor | number:2}}" aria-describedby="basic-addon1" disabled>
+                                          <input type="text" class="form-control text-center" value="{{tasaInput * t.valor | number:2}}" aria-describedby="basic-addon1" disabled>
                                         </div>
                                         <small class="pull-right"><i class="fa fa-calendar-o"></i> {{t.fecha | date: 'dd-MMM-yyyy'}}</small>
                                     </a>
