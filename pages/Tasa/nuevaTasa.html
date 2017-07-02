@@ -1,0 +1,55 @@
+<form name="agregarTasa" autocomplete="off" ng-submit="agregarTasa.$valid && crearTasa()" novalidate>
+
+    <div class="modal-content">
+        <div class="box box-success">
+            <div class="box-body" style="display: block; padding: 0;">
+                <!-- .modal-header -->
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$close()">
+                        <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                    </button>
+                    <h4 class="modal-title">Agregar Tasa</h4>
+                </div>
+                <!-- /.modal-header -->
+
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <!--alerta de error-->
+                    <div class="alert alert-danger alert-dismissable" ng-show="agregarTasa.$submitted && !agregarTasa.$valid">
+                        <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> Corriga los errores antes de continuar.
+                    </div>
+                    <!-- / .alert-->
+                    <div class="col-xs-12">
+
+                        <div class="form-group">
+                            <label>Moneda</label>
+                            <select name="moneda" class="form-control" ng-options="m as m.simbolo for m in monedas track by m.id" ng-model="tasa.moneda"
+                                required>
+                                    <option value="">Seleccione una Moneda</option>
+                                </select>
+                                <p ng-repeat="m in monedas"></p>
+                            <span class="text-danger" ng-show="agregarTasa.$submitted && agregarTasa.moneda.$error.required">Debe elegir la moneda</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Valor</label>
+                            <input type="number" name="valor" class="form-control" placeholder="¿Cuál es el valor?" ng-model="tasa.valor" required>
+                            <span class="text-danger" ng-show="agregarTasa.$submitted && !agregarTasa.valor.$valid">Debe darle un valor</span>
+                        </div>  
+                    </div>
+                </div>
+                <!-- /.modal-body -->
+
+
+            </div>
+            <!-- .box-footer-->
+            <div class="box-footer">
+                <button type="button" class="btn btn-default pull-left" ng-click="$close()"><i class="fa fa-times"></i> Cerrar</button>
+                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Crear</button>
+            </div>
+            <!-- /. box-footer-->
+
+        </div>
+    </div>
+</form>

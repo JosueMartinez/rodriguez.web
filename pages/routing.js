@@ -20,7 +20,7 @@
             })
             .state('loginLayout.login',{
                 url: '/login',
-                templateUrl: '/Pages/Login/login.html',
+                templateUrl: '/Pages/Usuarios/login.html',
                 controller: 'loginController'
             })
             .state('master.bonos',{
@@ -37,34 +37,16 @@
                 url: '/Productos',
                 templateUrl: '/Pages/Productos/productos.html',
                 controller: 'productoController'
+            })
+            .state('master.usuarios',{
+                url: '/Usuarios',
+                templateUrl: '/Pages/Usuarios/usuarios.html',
+                controller: 'usuarioController'
+            })
+            .state('master.tasas',{
+                url: '/Tasas',
+                templateUrl: '/Pages/Tasa/tasas.html',
+                controller: 'tasaController'
             });
     });
-
-    // route.config(function ($routeProvider){
-    //     $routeProvider.when("/", {
-    //         templateUrl: "/Pages/Bonos/bonos.html",
-    //         controller: 'bonoController'
-    //     })
-    //     .when("/login",{
-    //         templateUrl: "/Pages/Login/login.html",
-    //         controller: 'loginController'
-    //     })
-    //     .when("/Bonos", {
-    //         templateUrl: "/Pages/Bonos/bonos.html",
-    //         controller: 'bonoController'
-    //     })
-    //     .when("/Bonos/:id", {
-    //         templateUrl: "Pages/Bonos/bono.html",
-    //         controller: 'bonoDetalleController'
-    //     })
-    //     .when("/Productos", {
-    //         templateUrl: "/Pages/Productos/productos.html",
-    //         controller: 'productoController'
-    //     })
-    //     .otherwise({
-    //         redirectTo: "/"
-    //     });
-    // });
-
-
 })();

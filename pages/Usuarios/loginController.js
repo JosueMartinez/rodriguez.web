@@ -16,7 +16,7 @@ app.controller('loginController', ['$scope', '$location', 'authService', functio
 
         },
             function (err) {
-                $scope.message = err.error_description;
+                $scope.message = "Usuario y/o Contraseña incorrecta";
             });
     };
 

@@ -71,7 +71,7 @@
                     url: settings.baseUrl + "productos/" + id,
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
                 }).then(function successCallback(response) {
-                    alert("Se ha borrado el producto " + response.nombre);
+                    alert("Se ha borrado el producto ");
                     return  response;
                 }, function errorCallback(response) {
                     alert("El producto esta siendo usado en listas de compras y no se puede borrar");
@@ -83,7 +83,7 @@
 
     prod.controller('productoController', function ($scope, $uibModal, $log, $document, $http, productoServ, localStorageService, $location, $window) {
         $scope.pagina = "Productos & Categorias";
-        $scope.sitio = "este es el sitio";
+        $scope.sitio = "Manejo de Productos y Categorias para Listas de Compras";
         
         var authData = localStorageService.get('authorizationData');
         if(authData){
@@ -101,9 +101,9 @@
         $scope.borrar = function(id){
             var confirmar = $window.confirm("¿Seguro de querer borrar el producto?");
             if(confirmar){
-                productoServ.borrarProducto(id).then(function(data){
+                productoServ.borrarProducto(id).then(function(){
                     productoServ.obtenerProductos(authData).then(function(data){
-                        $scope.productos = data;
+                         $scope.productos = data;
                     });
                 });
             }
@@ -119,7 +119,11 @@
                 scope: $scope,
                 controller: 'productoModalController',
                 controllerAs: 'producto'
-            });
+            }).closed.then(function(){
+                productoServ.obtenerProductos(authData).then(function(data){
+                    $scope.productos = data;
+                });
+            });;
         };
 
         //modal para agregar productoController
@@ -132,7 +136,11 @@
                 scope: $scope,
                 controller: 'categoriaModalController',
                 controllerAs: 'categoria'
-            });
+            }).closed.then(function(){
+                productoServ.obtenerCategorias(authData).then(function(data){
+                    $scope.categorias = data;
+                });
+            });;
         };
     });
 
@@ -146,7 +154,7 @@
                 .then(function(response){
                     if(response.status.toString().includes("20")){
                         alert("Se ha creado la categoría " + response.data.descripcion);
-                        $scope.categorias.push(response.data);
+                        // $scope.categorias.push(response.data);
                         $uibModalInstance.close();
                     }else{
                         alert(response.data.Message);
@@ -178,7 +186,7 @@
             .then(function(response){
                 if(response.status.toString().includes("20")){
                     alert("Se ha creado el producto " + response.data.nombre);
-                    $scope.productos.push(response.data);
+                    // $scope.productos.push(response.data);
                     $uibModalInstance.close();
                 }else{
                     alert(response.data.Message);
