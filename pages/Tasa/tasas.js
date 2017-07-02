@@ -41,6 +41,8 @@ tasa.controller('tasaController', function ($scope, localStorageService, tasaSer
     $scope.sitio = "Tasas del día";
     $scope.tasas = "";
 
+    $scope.tasaInput = 1.00;
+
     var authData = localStorageService.get('authorizationData');
     if(authData){
         tasaServ.obtenerTasas().then(function(data){
