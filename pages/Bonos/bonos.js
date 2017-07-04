@@ -117,6 +117,11 @@
                 bonoServ.pagarBono(id).then(function(data){
                     bonoServ.obtenerBonos(authData).then(function(data){
                         $scope.bonos = data;
+                        $scope.bonos.forEach(function (element) {
+                            element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
+                            element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
+                            element.montoRd = element.monto * element.tasa.valor;
+                        }, this);
                     });
                 });
             }
@@ -153,6 +158,9 @@
                 bonoServ.pagarBono(id).then(function(data){
                     bonoServ.detalleBono(id).then(function(data){
                         $scope.bono = data;
+                        $scope.bono.cliente.nombreCompleto = $scope.bono.cliente.nombres + ' ' + $scope.bono.cliente.apellidos;
+                        $scope.bono.nombreDestinoCompleto = $scope.bono.nombreDestino + ' ' + $scope.bono.apellidoDestino;
+                        $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
                     });
                 });
             }
