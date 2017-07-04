@@ -35,7 +35,7 @@
                             <td class="text-center">{{t.fecha  | date:"dd-MMM-yyyy '-' h:mma"}}</td>
                             <td class="text-center">{{t.valor | currency}}</td>
                             <td>
-                                <a ng-click="historial(t.moneda.id)" class="fa fa-history text-info"></a>
+                                <a ng-click="historial(t.moneda,'/pages/Tasa/historial.html','md')" class="fa fa-history text-info"></a>
                             </td>
                         </tr>
                     </tbody>

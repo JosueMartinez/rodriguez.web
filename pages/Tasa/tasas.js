@@ -12,6 +12,17 @@ tasa.service('tasaServ', ['$http', 'settings', 'localStorageService', function (
         });
     };
 
+    this.obtenerHistorial = function(moneda){
+        
+        return  $http({
+            method: 'GET',
+            url: settings.baseUrl + "monedas/"+moneda.id+"/historial",
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
     this.obtenerMonedas = function(){
         return  $http({
             method: 'GET',
@@ -67,6 +78,33 @@ tasa.controller('tasaController', function ($scope, localStorageService, tasaSer
             });
         });
     };
+
+    $scope.historial = function (moneda, page, size){
+        $scope.monedaSeleccionada = moneda;
+        $scope.modalHistorial= $uibModal.open({
+            animation: true,
+            size: size,
+            templateUrl: page,
+            scope: $scope,
+            controller: 'historialModalController as hist'
+        });
+    };
+
+    $scope.modalHistorialTasa = function(page,size){
+        $scope.modalHistorial= $uibModal.open({
+            animation: true,
+            size: size,
+            templateUrl: page,
+            scope: $scope,
+            controller: 'historialModalController as hist'
+        });
+    };
+});
+
+tasa.controller('historialModalController', function(tasaServ,$scope, $uibModalInstance){
+    tasaServ.obtenerHistorial($scope.monedaSeleccionada).then(function(data){
+        $scope.historial = data;
+    });
 });
 
 tasa.controller('tasaModalController', function (tasaServ, $scope, $uibModalInstance){

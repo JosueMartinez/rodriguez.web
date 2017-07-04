@@ -1,0 +1,48 @@
+
+    <div class="modal-content">
+        <div class="box box-success">
+            <div class="box-body" style="display: block; padding: 0;">
+                <!-- .modal-header -->
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$close()">
+                        <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                    </button>
+                    <h4 class="modal-title text-center">Historial Tasa - {{monedaSeleccionada.descripcion}} ({{monedaSeleccionada.simbolo}})</h4>
+                </div>
+                <!-- /.modal-header -->
+
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <div class="col-xs-12">
+                        <table id="tasas" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <!--<th class="text-center">Simbolo</th>
+                                    <th class="text-center">Nombre</th>-->
+                                    <th class="text-center">Fecha</th>
+                                    <th class="text-center">Valor</th>
+                                    <!--<th class="text-center"></th>-->
+                                </tr>
+                            </thead>
+                            <!--Cuerpo de la tabla-->
+                            <tbody>
+                                <tr ng-repeat="t in historial">
+                                    <td class="text-center">{{t.fecha  | date:"dd-MMM-yyyy '-' h:mma"}}</td>
+                                    <td class="text-center">RD$ {{t.valor | currency}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.modal-body -->
+
+
+            </div>
+            <!-- .box-footer-->
+            <div class="box-footer">
+                <button type="button" class="btn btn-default pull-left" ng-click="$close()"><i class="fa fa-times"></i> OK</button>
+            </div>
+            <!-- /. box-footer-->
+
+        </div>
+    </div>
