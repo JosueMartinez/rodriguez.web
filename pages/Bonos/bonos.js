@@ -84,7 +84,7 @@
                 bonoServ.obtenerBonosPagados().then(function (data) {
                     $scope.bonosPagados = data;
                     $scope.bonosPagados.forEach(function (element) {
-                        element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
+                        // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
                         element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
                         element.montoRd = element.monto * element.tasa.valor;
                     }, this);
@@ -100,7 +100,7 @@
             bonoServ.obtenerBonos().then(function (data) {
                 $scope.bonos = data;
                 $scope.bonos.forEach(function (element) {
-                    element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
+                    // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
                     element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
                     element.montoRd = element.monto * element.tasa.valor;
                 }, this);
