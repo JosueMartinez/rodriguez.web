@@ -48,6 +48,7 @@
                 }).then(function successCallback(response) {
                     return  response;
                 }, function errorCallback(response) {
+                    response.error = true
                     return response;
                 });
             };
@@ -61,6 +62,7 @@
                 }).then(function successCallback(response) {
                     return  response;
                 }, function errorCallback(response) {
+                    response.error = true;
                     return response;
                 });
             };
@@ -71,17 +73,16 @@
                     url: settings.baseUrl + "productos/" + id,
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
                 }).then(function successCallback(response) {
-                    alert("Se ha borrado el producto ");
                     return  response;
                 }, function errorCallback(response) {
-                    alert("El producto esta siendo usado en listas de compras y no se puede borrar");
+                    response.error = true;
                     return response;
                 });
             };
     }]);
 //   Fin de servicios para productos
 
-    prod.controller('productoController', function ($scope, $uibModal, $log, $document, $http, productoServ, localStorageService, $location, $window) {
+    prod.controller('productoController', function ($scope, $uibModal, $log, $document, $http, productoServ, localStorageService, $location, $window, Notification) {
         $scope.pagina = "Productos & Categorias";
         $scope.sitio = "Manejo de Productos y Categorias para Listas de Compras";
         
@@ -101,10 +102,16 @@
         $scope.borrar = function(id){
             var confirmar = $window.confirm("¿Seguro de querer borrar el producto?");
             if(confirmar){
-                productoServ.borrarProducto(id).then(function(){
-                    productoServ.obtenerProductos(authData).then(function(data){
-                         $scope.productos = data;
-                    });
+                productoServ.borrarProducto(id).then(function(response){
+                    if(!response.error){
+                        Notification.success({ message: 'Producto borrado', delay: 5000 });
+                        productoServ.obtenerProductos(authData).then(function(data){
+                             $scope.productos = data;
+                        });
+                    }else{
+                        Notification.error({ message: 'No se ha podido borrrar el producto', positionY: 'bottom', delay: 5000 });
+                    }
+                    
                 });
             }
         };
@@ -144,7 +151,7 @@
         };
     });
 
-    prod.controller('categoriaModalController', function ($uibModalInstance, productoServ, $scope) {
+    prod.controller('categoriaModalController', function ($uibModalInstance, productoServ, $scope, Notification) {
         var categoria = {};
 
         this.crearCategoria = function(){
@@ -152,18 +159,18 @@
             console.log(categoria);
             productoServ.guardarCategoria(categoria)
                 .then(function(response){
-                    if(response.status.toString().includes("20")){
-                        alert("Se ha creado la categoría " + response.data.descripcion);
+                    if(!response.error){
+                        Notification.success({ message: 'Se ha creado la categoría con éxtio', delay: 5000 });
                         // $scope.categorias.push(response.data);
                         $uibModalInstance.close();
                     }else{
-                        alert(response.data.Message);
+                        Notification.error({ message: 'Ha ocurrido un error', positionY: 'bottom', delay: 5000 });
                     }
                 });
         };
     });
 
-    prod.controller('productoModalController', function ($uibModalInstance, productoServ, $scope, $http, settings) {
+    prod.controller('productoModalController', function ($uibModalInstance, productoServ, $scope, $http, settings, Notification) {
         //obteniendo categorias para poblar combobox
         productoServ.obtenerCategorias().then(function(data){
             // $scope.categorias = data;
@@ -184,12 +191,15 @@
             //hacer POST request
             productoServ.guardarProducto(producto)
             .then(function(response){
-                if(response.status.toString().includes("20")){
-                    alert("Se ha creado el producto " + response.data.nombre);
+                if(!response.error){
+                    Notification.success({message: 'Se ha creado el producto ' + response.data.nombre, delay: 5000 });
+                    // alert("Se ha creado el producto " + response.data.nombre);
                     // $scope.productos.push(response.data);
                     $uibModalInstance.close();
                 }else{
-                    alert(response.data.Message);
+                    Notification.error({ message: 'No se ha podido guardar el producto', positionY: 'bottom', delay: 5000 });
+                    // alert(response.data.Message);
+
                 }
             });
         };

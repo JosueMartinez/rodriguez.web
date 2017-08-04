@@ -2,129 +2,133 @@
     var bonos = angular.module('bonos', ['base64']);
 
     //Servicio para bonos
-    bonos.service('bonoServ', ['$http', 'settings', 'localStorageService' , function ($http, settings,localStorageService) {
+    bonos.service('bonoServ', ['$http', 'settings', 'localStorageService', function ($http, settings, localStorageService, Notification) {
 
-    var functions = { 
-        obtenerBonos : function(){
-            var authData = localStorageService.get('authorizationData');
-            if(authData){
-                return $http({
-                    method: 'GET',
-                    url: settings.baseUrl + "bonos",
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
-                }).then(function (response) {
-                    return response.data;
-                });
-            }
-        },
+        var functions = {
+            obtenerBonos: function () {
+                var authData = localStorageService.get('authorizationData');
+                if (authData) {
+                    return $http({
+                        method: 'GET',
+                        url: settings.baseUrl + "bonos",
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
+                    }).then(function (response) {
+                        return response.data;
+                    });
+                }
+            },
 
-        obtenerBonosPagados : function(){
-            var authData = localStorageService.get('authorizationData');
-            if(authData){
-                return $http({
-                    method: 'GET',
-                    url: settings.baseUrl + "bonosPagados",
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
-                }).then(function (response) {
-                    return response.data;
-                });
-            }
+            obtenerBonosPagados: function () {
+                var authData = localStorageService.get('authorizationData');
+                if (authData) {
+                    return $http({
+                        method: 'GET',
+                        url: settings.baseUrl + "bonosPagados",
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
+                    }).then(function (response) {
+                        return response.data;
+                    });
+                }
 
-        },
+            },
 
-        detalleBono : function(id){
-            var authData = localStorageService.get('authorizationData');
-            if(authData){
-                return $http({
-                    method: 'GET',
-                    url: settings.baseUrl + "bonos/" + id,
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
-                }).then(function (response) {
-                    return response.data;
-                });
-            }
-        },
+            detalleBono: function (id) {
+                var authData = localStorageService.get('authorizationData');
+                if (authData) {
+                    return $http({
+                        method: 'GET',
+                        url: settings.baseUrl + "bonos/" + id,
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
+                    }).then(function (response) {
+                        return response.data;
+                    });
+                }
+            },
 
-        imprimirTicket :  function(id){
-            alert('mandando a imprimir');
-        },
+            imprimirTicket: function (id) {
+                alert('mandando a imprimir');
+            },
 
-        pagarBono : function(id){
-            var authData = localStorageService.get('authorizationData');
-            if(authData){
-                return $http({
-                    method: 'PUT',
-                    url: settings.baseUrl + "bonos/" + id + "/pagar",
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
-                }).then(function (response){
-                    alert("Se ha pagado el bono");
-                    functions.imprimirTicket(id);
-                    return response.data;
-                }, function(response){
-                    alert("Ha ocurrido un error");
-                    return response.data;
-                });
+            pagarBono: function (id) {
+                var authData = localStorageService.get('authorizationData');
+                if (authData) {
+                    return $http({
+                        method: 'PUT',
+                        url: settings.baseUrl + "bonos/" + id + "/pagar",
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
+                    }).then(function (response) {
+                        response.error = false;
+                        return response;
+                    }, function (response) {
+                        response.error = true;
+                        return response;
+                    });
+                }
             }
         }
-    }
 
-    return functions;
+        return functions;
 
     }]);
 
- 
 
-    bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location, $window){
+
+    bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location, $window, Notification) {
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
 
         var authData = localStorageService.get('authorizationData');
-        
-        $scope.obtenerPagados = function(){
-            if(authData){
+
+        $scope.obtenerPagados = function () {
+            if (authData) {
                 bonoServ.obtenerBonosPagados().then(function (data) {
                     $scope.bonosPagados = data;
-                    $scope.bonosPagados.forEach(function(element) {
+                    $scope.bonosPagados.forEach(function (element) {
                         element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
                         element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
                         element.montoRd = element.monto * element.tasa.valor;
                     }, this);
 
-                }); 
-            }else{
+                });
+            } else {
                 $location.path('/login');
             }
         };
 
-        
-        if(authData){
+
+        if (authData) {
             bonoServ.obtenerBonos().then(function (data) {
                 $scope.bonos = data;
-                $scope.bonos.forEach(function(element) {
+                $scope.bonos.forEach(function (element) {
                     element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
                     element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
                     element.montoRd = element.monto * element.tasa.valor;
                 }, this);
 
-            }); 
-        }else{
+            });
+        } else {
             $location.path('/login');
         }
 
-        $scope.pagarBono = function(id){
+        $scope.pagarBono = function (id) {
             var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
-            if(confirmar){
-                bonoServ.pagarBono(id).then(function(data){
-                    bonoServ.obtenerBonos(authData).then(function(data){
-                        $scope.bonos = data;
-                    });
+            if (confirmar) {
+                bonoServ.pagarBono(id).then(function (response) {
+                    if (!response.error) {
+                        Notification.success({ message: 'Se ha pagado con éxito', delay: 5000 });
+                        bonoServ.obtenerBonos(authData).then(function (data) {
+                            $scope.bonos = data;
+                        });
+                    } else {
+                        Notification.error({ message: 'Ha ocurrido un error', positionY: 'bottom', delay: 5000 });
+                    }
                 });
             }
         };
 
-        $scope.imprimirTicket = function(id){
+        $scope.imprimirTicket = function (id) {
             var confirmar = $window.confirm("¿Seguro de querer imprimir el recibo?");
-            if(confirmar){
+            if (confirmar) {
                 bonoServ.imprimirTicket(id);
             }
         }
@@ -132,14 +136,14 @@
 
     });
 
-    bonos.controller('bonoDetalleController', function ($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window){
+    bonos.controller('bonoDetalleController', function ($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window) {
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
         $scope.bono = {};
         var authData = localStorageService.get('authorizationData');
-        
-        bonoServ.detalleBono($stateParams.id).then(function(data){
-             
+
+        bonoServ.detalleBono($stateParams.id).then(function (data) {
+
             $scope.bono = data;
             // $scope.bono.metodoPago = paypalService.getPayment($scope.bono.paypalId);
             $scope.bono.cliente.nombreCompleto = $scope.bono.cliente.nombres + ' ' + $scope.bono.cliente.apellidos;
@@ -147,20 +151,20 @@
             $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
         });
 
-        $scope.pagarBono = function(id){
+        $scope.pagarBono = function (id) {
             var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
-            if(confirmar){
-                bonoServ.pagarBono(id).then(function(data){
-                    bonoServ.detalleBono(id).then(function(data){
+            if (confirmar) {
+                bonoServ.pagarBono(id).then(function (data) {
+                    bonoServ.detalleBono(id).then(function (data) {
                         $scope.bono = data;
                     });
                 });
             }
         };
 
-        $scope.imprimirTicket = function(id){
+        $scope.imprimirTicket = function (id) {
             var confirmar = $window.confirm("¿Seguro de querer imprimir el recibo?");
-            if(confirmar){
+            if (confirmar) {
                 bonoServ.imprimirTicket(id);
             }
         }

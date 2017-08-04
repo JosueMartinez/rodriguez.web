@@ -1,6 +1,6 @@
    var app = angular.module('rodriguezApp', ['bonos', 'producto', 'directives', 'routing', 'usuarios', 'tasas',
                             'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'angularUtils.directives.dirPagination', 
-                            'angular-loading-bar']);
+                            'angular-loading-bar', 'ui-notification']);
 
     app.config(['$locationProvider', function ($locationProvider) {
         $locationProvider.hashPrefix('');

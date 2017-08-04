@@ -42,6 +42,7 @@ tasa.service('tasaServ', ['$http', 'settings', 'localStorageService', function (
         }).then(function successCallback(response) {
             return  response;
         }, function errorCallback(response) {
+            response.error = true;
             return response;
         });
     };
@@ -107,7 +108,7 @@ tasa.controller('historialModalController', function(tasaServ,$scope, $uibModalI
     });
 });
 
-tasa.controller('tasaModalController', function (tasaServ, $scope, $uibModalInstance){
+tasa.controller('tasaModalController', function (tasaServ, $scope, $uibModalInstance, Notification){
     //obteniendo monedas para poblar combobox
     tasaServ.obtenerMonedas().then(function(data){
         $scope.monedas = data;
@@ -122,11 +123,11 @@ tasa.controller('tasaModalController', function (tasaServ, $scope, $uibModalInst
         //hacer POST request
         tasaServ.guardarTasa(tasa)
         .then(function(response){
-            if(response.status.toString().includes("20")){
-                alert("Se ha cambiado la tasa");
+            if(!response.error){
+                Notification.success({ message: 'Se ha cambiado la tasa', delay: 5000 });
                 $uibModalInstance.close();
             }else{
-                alert(response.data.Message);
+                Notification.error({ message: 'No se ha podido guardar la tasa', positionY: 'bottom', delay: 5000 });
             }
         });
     };
