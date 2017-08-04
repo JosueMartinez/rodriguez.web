@@ -157,6 +157,9 @@
                 bonoServ.pagarBono(id).then(function (data) {
                     bonoServ.detalleBono(id).then(function (data) {
                         $scope.bono = data;
+                        $scope.bono.cliente.nombreCompleto = $scope.bono.cliente.nombres + ' ' + $scope.bono.cliente.apellidos;
+                        $scope.bono.nombreDestinoCompleto = $scope.bono.nombreDestino + ' ' + $scope.bono.apellidoDestino;
+                        $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
                     });
                 });
             }
