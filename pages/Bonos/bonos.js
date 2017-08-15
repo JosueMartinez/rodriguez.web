@@ -73,7 +73,7 @@
 
 
 
-    bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location, $window, Notification) {
+    bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location, $window, Notification, $interval) {
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
 
@@ -95,20 +95,30 @@
             }
         };
 
+        $scope.obtenerBonos = function(){
+            if (authData) {
+                bonoServ.obtenerBonos().then(function (data) {
+                    $scope.bonos = data;
+                    $scope.bonos.forEach(function (element) {
+                        // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
+                        element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
+                        element.montoRd = element.monto * element.tasa.valor;
+                    }, this);
 
-        if (authData) {
-            bonoServ.obtenerBonos().then(function (data) {
-                $scope.bonos = data;
-                $scope.bonos.forEach(function (element) {
-                    // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                    element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
-                    element.montoRd = element.monto * element.tasa.valor;
-                }, this);
+                });
+            } else {
+                $location.path('/login');
+            }
+        };
+        
+        //leida inicial
+        $scope.obtenerBonos();
 
-            });
-        } else {
-            $location.path('/login');
-        }
+        //refresh cada 1 minuto
+        $scope.intervalPromise = $interval(function(){
+            console.log('reloading');
+            $scope.obtenerBonos();
+        }, 60000);  
 
         $scope.pagarBono = function (id) {
             var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
