@@ -49,6 +49,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'settings', fu
 
         _authentication.isAuth = false;
         _authentication.userName = "";
+        _authentication.usuario = null;
 
     };
 
@@ -59,6 +60,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'settings', fu
         {
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
+            _authentication.usuario = authData.usuario;
         }
 
     };
