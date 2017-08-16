@@ -22,11 +22,19 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'settings', fu
         var deferred = $q.defer();
         
         $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
-        .then(function(response){
-            localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.userName });
-                _authentication.isAuth = true;
-                _authentication.userName = loginData.userName;
-                deferred.resolve(response);
+        .then(function(responseToken){
+            //obtener usuario real
+            $http.get(serviceBase + 'usuarioU/' + loginData.userName, {headers: {'Authorization': 'Bearer ' + responseToken.data.access_token} })
+                .then(function(response){
+                    localStorageService.set('authorizationData', { token: responseToken.data.access_token, userName: loginData.userName, usuario: response.data });
+                    _authentication.isAuth = true;
+                    _authentication.userName = loginData.userName;
+                    deferred.resolve(response);
+                }, function(response){
+                    _logOut();
+                    deferred.reject(response);
+                });
+            
         },function(response){
             _logOut();
                 deferred.reject(response);
