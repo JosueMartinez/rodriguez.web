@@ -5,10 +5,43 @@
         <div class="box-header">
             <h3 class="box-title"></h3>
         </div>
-        <div class="box-body">
+        <div class="box-body table-responsive">
+            <table id="bonosPagados" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="20">
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="search" placeholder="Buscar...">
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Código</th>
+                        <th class="text-center">Usuario</th>
+                        <th class="text-center">Nombre Completo</th>
+                        <th class="text-center">Rol</th>
+                    </tr>
+                </thead>
+                <!--Cuerpo de la tabla-->
+                <tbody>
+                    <tr dir-paginate="u in usuarios | filter: search  | itemsPerPage: 10"  pagination-id="pagados">
+                        <td class="text-center">{{u.id}}</td>
+                        <td class="text-center">{{u.nombreUsuario}}</td>
+                        <td class="text-center">{{u.nombreCompleto}}</td>
+                        <td class="text-center">{{u.rol.descripcion}}</td>  
+                        <td class="text-center" ng-hide="authentication.usuario.rol.descripcion === 'Empleado'">
+                            <a ui-sref="master.bonoDetail({id: b.id})" ><span class="fa fa-pencil" title="Editar"></span></a> |
+                            <a href ng-click="imprimirTicket(b.id)"><span class="fa fa-times text-danger" title="Eliminar"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <!--Fin cuerpo de la tabla-->
+            </table>
+            <dir-pagination-controls></dir-pagination-controls>
 
-
-
-        </div>  <!-- /box-body -->
-    </div> <!-- /box-primary -->
-</section> <!-- content -->
+        </div>
+        <!-- /box-body -->
+    </div>
+    <!-- /box-primary -->
+</section>
+<!-- content -->
