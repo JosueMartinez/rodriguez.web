@@ -185,14 +185,14 @@
         $scope.crearProducto = function () {
             
             var producto = $scope.producto;
-            producto.medidaId = producto.medida.id;
-            producto.categoriaId = producto.categoria.id;
+            producto.MedidaId = producto.Medida.Id;
+            producto.CategoriaId = producto.Categoria.Id;
 
             //hacer POST request
             productoServ.guardarProducto(producto)
             .then(function(response){
                 if(!response.error){
-                    Notification.success({message: 'Se ha creado el producto ' + response.data.nombre, delay: 5000 });
+                    Notification.success({message: 'Se ha creado el producto ' + response.data.Nombre, delay: 5000 });
                     // alert("Se ha creado el producto " + response.data.nombre);
                     // $scope.productos.push(response.data);
                     $uibModalInstance.close();
