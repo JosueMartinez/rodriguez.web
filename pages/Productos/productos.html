@@ -21,7 +21,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th class="text-center">Código</th>
+                            <!-- <th class="text-center">Código</th> -->
                             <th class="text-center">Nombre</th>
                             <th class="text-center">Categoria</th>
                             <th class="text-center">Ud. Medida</th>
@@ -31,10 +31,10 @@
                     <!--Cuerpo de la tabla-->
                     <tbody>
                         <tr dir-paginate="p in productos | filter: searchProducto | itemsPerPage: 10" pagination-id="productos">
-                            <td class="text-center">{{p.id}}</td>
-                            <td class="text-center">{{p.nombre}}</td>
-                            <td class="text-center">{{p.categoria.descripcion}}</td>
-                            <td class="text-center">{{p.medida.simbolo}}</td>
+                            <!-- <td class="text-center">{{p.id}}</td> -->
+                            <td class="text-center">{{p.Nombre}}</td>
+                            <td class="text-center">{{p.Categoria.Descripcion}}</td>
+                            <td class="text-center">{{p.Medida.Simbolo}}</td>
                             <td>
                                 <a ng-click="borrar(p.id)" class="fa fa-trash text-danger"></a> | 
                                 <a ng-click="editar(p.id)" class="fa fa-pencil text-primary"></a>
@@ -61,7 +61,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th class="text-center">Código</th>
+                            <!-- <th class="text-center">Código</th> -->
                             <th class="text-center">Nombre</th>
                         </tr>
                     </thead>
@@ -69,8 +69,8 @@
                     <tbody>
                         <tr dir-paginate="c in categorias | filter: searchCategoria | itemsPerPage: 10" pagination-id="categorias">
                         <!--<tr ng-repeat="c in categorias">-->
-                            <td class="text-center">{{c.id}}</td>
-                            <td class="text-center">{{c.descripcion}}</td>
+                            <!-- <td class="text-center">{{c.id}}</td> -->
+                            <td class="text-center">{{c.Descripcion}}</td>
                         </tr>
                     </tbody>
                 </table>
