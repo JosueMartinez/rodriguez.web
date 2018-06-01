@@ -7,7 +7,7 @@
                     <button type="button" class="close" ng-click="$close()">
                         <span aria-hidden="true"><i class="fa fa-times"></i></span>
                     </button>
-                    <h4 class="modal-title text-center">Historial Tasa - {{monedaSeleccionada.descripcion}} ({{monedaSeleccionada.simbolo}})</h4>
+                    <h4 class="modal-title text-center">Historial Tasa - {{monedaSeleccionada.Descripcion}} ({{monedaSeleccionada.Simbolo}})</h4>
                 </div>
                 <!-- /.modal-header -->
 
@@ -27,8 +27,8 @@
                             <!--Cuerpo de la tabla-->
                             <tbody>
                                 <tr ng-repeat="t in historial">
-                                    <td class="text-center">{{t.fecha  | date:"dd-MMM-yyyy '-' h:mma"}}</td>
-                                    <td class="text-center">RD$ {{t.valor | currency}}</td>
+                                    <td class="text-center">{{t.Fecha  | date:"dd-MMM-yyyy '-' h:mma"}}</td>
+                                    <td class="text-center">RD$ {{t.Valor | currency}}</td>
                                 </tr>
                             </tbody>
                         </table>
