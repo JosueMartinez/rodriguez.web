@@ -15,37 +15,37 @@
             })
             .state('master.home', {
                 url: "/",
-                templateUrl: "Pages/Bonos/bonos.html",
+                templateUrl: "pages/Bonos/bonos.html",
                 controller: 'bonoController'
             })
             .state('loginLayout.login', {
                 url: '/login',
-                templateUrl: 'Pages/Usuarios/login.html',
+                templateUrl: 'pages/Usuarios/login.html',
                 controller: 'loginController'
             })
             .state('master.bonos', {
                 url: '/Bonos',
-                templateUrl: 'Pages/Bonos/bonos.html',
+                templateUrl: 'pages/Bonos/bonos.html',
                 controller: 'bonoController'
             })
             .state('master.bonoDetail', {
                 url: '/Bonos/:id',
-                templateUrl: "Pages/Bonos/bono.html",
+                templateUrl: "pages/Bonos/bono.html",
                 controller: 'bonoDetalleController'
             })
             .state('master.productos', {
                 url: '/Productos',
-                templateUrl: 'Pages/Productos/productos.html',
+                templateUrl: 'pages/Productos/productos.html',
                 controller: 'productoController'
             })
             .state('master.usuarios', {
                 url: '/Usuarios',
-                templateUrl: 'Pages/Usuarios/usuarios.html',
+                templateUrl: 'pages/Usuarios/usuarios.html',
                 controller: 'usuarioController'
             })
             .state('master.tasas', {
                 url: '/Tasas',
-                templateUrl: 'Pages/Tasa/tasas.html',
+                templateUrl: 'pages/Tasa/tasas.html',
                 controller: 'tasaController'
             });
     });
