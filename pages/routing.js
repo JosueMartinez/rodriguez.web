@@ -15,7 +15,7 @@
             })
             .state('master.home', {
                 url: "/",
-                templateUrl: "/Pages/Bonos/bonos.html",
+                templateUrl: "Pages/Bonos/bonos.html",
                 controller: 'bonoController'
             })
             .state('loginLayout.login', {
