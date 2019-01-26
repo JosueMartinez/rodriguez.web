@@ -20,12 +20,12 @@
             })
             .state('loginLayout.login', {
                 url: '/login',
-                templateUrl: '/Pages/Usuarios/login.html',
+                templateUrl: 'Pages/Usuarios/login.html',
                 controller: 'loginController'
             })
             .state('master.bonos', {
                 url: '/Bonos',
-                templateUrl: '/Pages/Bonos/bonos.html',
+                templateUrl: 'Pages/Bonos/bonos.html',
                 controller: 'bonoController'
             })
             .state('master.bonoDetail', {
@@ -35,17 +35,17 @@
             })
             .state('master.productos', {
                 url: '/Productos',
-                templateUrl: '/Pages/Productos/productos.html',
+                templateUrl: 'Pages/Productos/productos.html',
                 controller: 'productoController'
             })
             .state('master.usuarios', {
                 url: '/Usuarios',
-                templateUrl: '/Pages/Usuarios/usuarios.html',
+                templateUrl: 'Pages/Usuarios/usuarios.html',
                 controller: 'usuarioController'
             })
             .state('master.tasas', {
                 url: '/Tasas',
-                templateUrl: '/Pages/Tasa/tasas.html',
+                templateUrl: 'Pages/Tasa/tasas.html',
                 controller: 'tasaController'
             });
     });
