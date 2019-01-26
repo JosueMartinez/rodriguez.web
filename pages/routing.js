@@ -1,49 +1,49 @@
-(function(){
-    var route = angular.module('routing', ['ngRoute', 'ui.router','LocalStorageModule']);
+(function() {
+    var route = angular.module('routing', ['ngRoute', 'ui.router', 'LocalStorageModule']);
 
-    route.config(function ($urlRouterProvider,$stateProvider){
+    route.config(function($urlRouterProvider, $stateProvider) {
         $urlRouterProvider.otherwise("/");
 
         $stateProvider
-            .state('master',{
+            .state('master', {
                 abstract: true,
                 templateUrl: '/master.html'
             })
-            .state('loginLayout',{
+            .state('loginLayout', {
                 abstract: true,
-                templateUrl: '/loginLayout.html'
+                templateUrl: 'loginLayout.html'
             })
-            .state('master.home',{
+            .state('master.home', {
                 url: "/",
                 templateUrl: "/Pages/Bonos/bonos.html",
                 controller: 'bonoController'
             })
-            .state('loginLayout.login',{
+            .state('loginLayout.login', {
                 url: '/login',
                 templateUrl: '/Pages/Usuarios/login.html',
                 controller: 'loginController'
             })
-            .state('master.bonos',{
+            .state('master.bonos', {
                 url: '/Bonos',
                 templateUrl: '/Pages/Bonos/bonos.html',
                 controller: 'bonoController'
             })
-            .state('master.bonoDetail',{
+            .state('master.bonoDetail', {
                 url: '/Bonos/:id',
                 templateUrl: "Pages/Bonos/bono.html",
                 controller: 'bonoDetalleController'
             })
-            .state('master.productos',{
+            .state('master.productos', {
                 url: '/Productos',
                 templateUrl: '/Pages/Productos/productos.html',
                 controller: 'productoController'
             })
-            .state('master.usuarios',{
+            .state('master.usuarios', {
                 url: '/Usuarios',
                 templateUrl: '/Pages/Usuarios/usuarios.html',
                 controller: 'usuarioController'
             })
-            .state('master.tasas',{
+            .state('master.tasas', {
                 url: '/Tasas',
                 templateUrl: '/Pages/Tasa/tasas.html',
                 controller: 'tasaController'
