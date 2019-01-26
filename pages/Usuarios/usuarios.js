@@ -28,7 +28,7 @@ u.controller('usuarioController', function ($scope, localStorageService, Notific
     var usuario = authData.usuario;
     
     if(authData){
-        if(usuario.rol.descripcion !== 'Empleado'){
+        if(usuario.Rol.Descripcion !== 'Empleado'){
             usuarioServ.getUsuarios().then(function(data){
                 $scope.usuarios = data;
             });

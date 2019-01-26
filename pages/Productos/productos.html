@@ -16,12 +16,12 @@
                                     <span class="input-group-btn">
                                     <button class="btn btn-success" ng-click="modalProducto('/pages/Productos/nuevoProducto.html','md',{})" type="button"><i class="fa fa-plus"></i>  Nuevo Producto</button>
                                 </span>
-                                    <input type="text" class="form-control" placeholder="Buscar Producto" ng-model="searchProducto.nombre">
+                                    <input type="text" class="form-control" placeholder="Buscar Producto" ng-model="searchProducto.Nombre">
                                 </div>
                             </th>
                         </tr>
                         <tr>
-                            <th class="text-center">Código</th>
+                            <!-- <th class="text-center">Código</th> -->
                             <th class="text-center">Nombre</th>
                             <th class="text-center">Categoria</th>
                             <th class="text-center">Ud. Medida</th>
@@ -31,10 +31,10 @@
                     <!--Cuerpo de la tabla-->
                     <tbody>
                         <tr dir-paginate="p in productos | filter: searchProducto | itemsPerPage: 10" pagination-id="productos">
-                            <td class="text-center">{{p.id}}</td>
-                            <td class="text-center">{{p.nombre}}</td>
-                            <td class="text-center">{{p.categoria.descripcion}}</td>
-                            <td class="text-center">{{p.medida.simbolo}}</td>
+                            <!-- <td class="text-center">{{p.id}}</td> -->
+                            <td class="text-center">{{p.Nombre}}</td>
+                            <td class="text-center">{{p.Categoria.Descripcion}}</td>
+                            <td class="text-center">{{p.Medida.Simbolo}}</td>
                             <td>
                                 <a ng-click="borrar(p.id)" class="fa fa-trash text-danger"></a> | 
                                 <a ng-click="editar(p.id)" class="fa fa-pencil text-primary"></a>
@@ -56,12 +56,12 @@
                                     <span class="input-group-btn">
                                     <button class="btn btn-success" ng-click="modalCategoria('/pages/Productos/nuevaCategoria.html','md',{})" type="button"><i class="fa fa-plus"></i>  Nueva Categoria</button>
                                 </span>
-                                    <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchCategoria.descripcion">
+                                    <input type="text" class="form-control" placeholder="Buscar Categoría" ng-model="searchCategoria.Descripcion">
                                 </div>
                             </th>
                         </tr>
                         <tr>
-                            <th class="text-center">Código</th>
+                            <!-- <th class="text-center">Código</th> -->
                             <th class="text-center">Nombre</th>
                         </tr>
                     </thead>
@@ -69,8 +69,8 @@
                     <tbody>
                         <tr dir-paginate="c in categorias | filter: searchCategoria | itemsPerPage: 10" pagination-id="categorias">
                         <!--<tr ng-repeat="c in categorias">-->
-                            <td class="text-center">{{c.id}}</td>
-                            <td class="text-center">{{c.descripcion}}</td>
+                            <!-- <td class="text-center">{{c.id}}</td> -->
+                            <td class="text-center">{{c.Descripcion}}</td>
                         </tr>
                     </tbody>
                 </table>
