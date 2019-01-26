@@ -1,53 +1,54 @@
    var app = angular.module('rodriguezApp', ['bonos', 'producto', 'directives', 'routing', 'usuarios', 'tasas',
-                            'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'angularUtils.directives.dirPagination', 
-                            'angular-loading-bar', 'ui-notification']);
+       'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'angularUtils.directives.dirPagination',
+       'angular-loading-bar', 'ui-notification'
+   ]);
 
-    app.config(['$locationProvider', function ($locationProvider) {
-        $locationProvider.hashPrefix('');
-    }]);
+   app.config(['$locationProvider', function($locationProvider) {
+       $locationProvider.hashPrefix('');
+   }]);
 
-    app.config(function ($httpProvider) {
-        $httpProvider.interceptors.push('authInterceptorService');
-    });
+   app.config(function($httpProvider) {
+       $httpProvider.interceptors.push('authInterceptorService');
+   });
 
-    app.constant("settings", {
-        "baseUrl": "http://localhost/RodriguezApi/api/",
-        "port": "80",
-        "PayPalApiUrl": "https://api.sandbox.paypal.com/v1/",
-        "PayPalClientId": "AbpLXvsoTb4Qrd1qQbGl6QsllrYC-QSumRWB3rlM6nbBtx01ngomIDdiyF94lZaz47lVsY7Mt5MveM20",
-        "PayPalSecret": "EOGvMzgbRC6Bf9YhTwVPQFNNzpHtkKdE_eWlBYMUQhh01CGrvjqYrLTEDZL1w-xt6XNdYfY-Im0qpZ9V"
-    });
+   app.constant("settings", {
+       "baseUrl": "http://josuemartinez.eastus.cloudapp.azure.com/rodriguez.api/api/",
+       "port": "80",
+       "PayPalApiUrl": "https://api.sandbox.paypal.com/v1/",
+       "PayPalClientId": "AbpLXvsoTb4Qrd1qQbGl6QsllrYC-QSumRWB3rlM6nbBtx01ngomIDdiyF94lZaz47lVsY7Mt5MveM20",
+       "PayPalSecret": "EOGvMzgbRC6Bf9YhTwVPQFNNzpHtkKdE_eWlBYMUQhh01CGrvjqYrLTEDZL1w-xt6XNdYfY-Im0qpZ9V"
+   });
 
-    app.run(['authService', '$location', function (authService,$location) {
-          authService.fillAuthData();
-          
-          if(!authService.authentication.isAuth){
-              console.log("NO ESTA LOGEADO");
-              $location.path('/login');
-          }
-    }]);
+   app.run(['authService', '$location', function(authService, $location) {
+       authService.fillAuthData();
 
-    app.controller('homeController', function ($scope) {
-        $scope.pagina = "Dashboard";
-        $scope.sitio = "Control Panel";
-    });
+       if (!authService.authentication.isAuth) {
+           console.log("NO ESTA LOGEADO");
+           $location.path('/login');
+       }
+   }]);
 
-    'use strict';
-    app.controller('loginController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
+   app.controller('homeController', function($scope) {
+       $scope.pagina = "Dashboard";
+       $scope.sitio = "Control Panel";
+   });
 
-        $scope.loginData = {
-            userName: "",
-            password: ""
-        };
+   'use strict';
+   app.controller('loginController', ['$scope', '$location', 'authService', function($scope, $location, authService) {
 
-        $scope.message = "";
+       $scope.loginData = {
+           userName: "",
+           password: ""
+       };
 
-        $scope.login = function () {
-            authService.login($scope.loginData).then(function (response) {
-                $location.path('/Bonos');
-            },
-             function (err) {
-                 $scope.message = err.error_description;
-             });
-        };
-    }]);
+       $scope.message = "";
+
+       $scope.login = function() {
+           authService.login($scope.loginData).then(function(response) {
+                   $location.path('/Bonos');
+               },
+               function(err) {
+                   $scope.message = err.error_description;
+               });
+       };
+   }]);
