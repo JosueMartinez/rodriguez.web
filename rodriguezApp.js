@@ -12,7 +12,7 @@
    });
 
    app.constant("settings", {
-       "baseUrl": "http://josuemartinez.eastus.cloudapp.azure.com/rodriguez.api/api/",
+       "baseUrl": "https://josuemartinez.eastus.cloudapp.azure.com/rodriguez.api/api/",
        "port": "80",
        "PayPalApiUrl": "https://api.sandbox.paypal.com/v1/",
        "PayPalClientId": "AbpLXvsoTb4Qrd1qQbGl6QsllrYC-QSumRWB3rlM6nbBtx01ngomIDdiyF94lZaz47lVsY7Mt5MveM20",
