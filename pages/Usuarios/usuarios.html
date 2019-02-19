@@ -24,13 +24,13 @@
                 </thead>
                 <!--Cuerpo de la tabla-->
                 <tbody>
-                    <tr dir-paginate="u in usuarios | filter: search  | itemsPerPage: 10"  pagination-id="pagados">
-                        <td class="text-center">{{u.id}}</td>
-                        <td class="text-center">{{u.nombreUsuario}}</td>
-                        <td class="text-center">{{u.nombreCompleto}}</td>
-                        <td class="text-center">{{u.rol.descripcion}}</td>  
+                    <tr dir-paginate="u in usuarios | filter: search  | itemsPerPage: 10" pagination-id="pagados">
+                        <td class="text-center">{{u.Id}}</td>
+                        <td class="text-center">{{u.NombreUsuario}}</td>
+                        <td class="text-center">{{u.NombreCompleto}}</td>
+                        <td class="text-center">{{u.rol.Descripcion}}</td>
                         <td class="text-center" ng-hide="authentication.usuario.rol.descripcion === 'Empleado'">
-                            <a ui-sref="master.bonoDetail({id: b.id})" ><span class="fa fa-pencil" title="Editar"></span></a> |
+                            <a ui-sref="master.bonoDetail({id: b.id})"><span class="fa fa-pencil" title="Editar"></span></a> |
                             <a href ng-click="imprimirTicket(b.id)"><span class="fa fa-times text-danger" title="Eliminar"></span></a>
                         </td>
                     </tr>
