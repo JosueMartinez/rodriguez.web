@@ -101,8 +101,8 @@
                     $scope.bonos = data;
                     $scope.bonos.forEach(function (element) {
                         // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                        element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
-                        element.montoRd = element.monto * element.tasa.valor;
+                        element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
+                        element.MontoRd = element.Monto * element.Tasa.Valor;
                     }, this);
 
                 });
