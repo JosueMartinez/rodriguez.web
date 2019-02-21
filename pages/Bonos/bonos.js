@@ -156,9 +156,9 @@
 
             $scope.bono = data;
             // $scope.bono.metodoPago = paypalService.getPayment($scope.bono.paypalId);
-            $scope.bono.cliente.nombreCompleto = $scope.bono.cliente.nombres + ' ' + $scope.bono.cliente.apellidos;
-            $scope.bono.nombreDestinoCompleto = $scope.bono.nombreDestino + ' ' + $scope.bono.apellidoDestino;
-            $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
+            $scope.bono.Cliente.nombreCompleto = $scope.bono.Cliente.Nombres + ' ' + $scope.bono.Cliente.Apellidos;
+            $scope.bono.NombreDestinoCompleto = $scope.bono.NombreDestino + ' ' + $scope.bono.ApellidoDestino;
+            $scope.bono.montoRD = $scope.bono.Monto * $scope.bono.Tasa.Valor;
         });
 
         $scope.pagarBono = function (id) {
@@ -167,9 +167,9 @@
                 bonoServ.pagarBono(id).then(function (data) {
                     bonoServ.detalleBono(id).then(function (data) {
                         $scope.bono = data;
-                        $scope.bono.cliente.nombreCompleto = $scope.bono.cliente.nombres + ' ' + $scope.bono.cliente.apellidos;
-                        $scope.bono.nombreDestinoCompleto = $scope.bono.nombreDestino + ' ' + $scope.bono.apellidoDestino;
-                        $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
+                        $scope.bono.Cliente.nombreCompleto = $scope.bono.Cliente.Nombres + ' ' + $scope.bono.Cliente.Apellidos;
+                        $scope.bono.NombreDestinoCompleto = $scope.bono.NombreDestino + ' ' + $scope.bono.ApellidoDestino;
+                        $scope.bono.montoRD = $scope.bono.Monto * $scope.bono.Tasa.Valor;
                     });
                 });
             }

@@ -8,56 +8,56 @@
             <div class="form-group">
                 <label class="control-label col-sm-6">ID:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.id}}</p>
+                    <p class="form-control-static">{{bono.Id}}</p>
                 </div>
             </div>
             <!--fecha-->
             <div class="form-group">
                 <label class="control-label col-sm-6">Fecha Compra:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.fechaCompra | date:"dd-MMM-yyyy" }}</p>
+                    <p class="form-control-static">{{bono.FechaCompra | date:"dd-MMM-yyyy" }}</p>
                 </div>
             </div>
             <!--comprador-->
             <div class="form-group">
                 <label class="control-label col-sm-6">Comprador:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.cliente.nombreCompleto}}</p>
+                    <p class="form-control-static">{{bono.Cliente.NombreCompleto}}</p>
                 </div>
             </div>
             <!--cedula comprador-->
             <div class="form-group">
                 <label class="control-label col-sm-6">Cédula Comprador:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.cliente.cedula}}</p>
+                    <p class="form-control-static">{{bono.Cliente.Cedula}}</p>
                 </div>
             </div>
             <!--telefono comprador-->
             <div class="form-group">
                 <label class="control-label col-sm-6">Teléfono Comprador:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.cliente.celular}}</p>
+                    <p class="form-control-static">{{bono.Cliente.Celular}}</p>
                 </div>
             </div>
             <!--destinatario-->
             <div class="form-group">
                 <label class="control-label col-sm-6">Destinatario:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.nombreDestinoCompleto}}</p>
+                    <p class="form-control-static">{{bono.NombreDestinoCompleto}}</p>
                 </div>
             </div>
             <!--cedula destinatario-->
             <div class="form-group">
                 <label class="control-label col-sm-6">Cédula Destinatario:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.cedulaDestino}}</p>
+                    <p class="form-control-static">{{bono.CedulaDestino}}</p>
                 </div>
             </div>
             <!--telefono destinatario-->
             <div class="form-group">
                 <label class="control-label col-sm-6">Teléfono Destinatario:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.telefonoDestino}}</p>
+                    <p class="form-control-static">{{bono.TelefonoDestino}}</p>
                 </div>
             </div>
 
@@ -68,14 +68,14 @@
             <div class="form-group">
                 <label class="control-label col-sm-6">Monto:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.tasa.moneda.simbolo}} {{bono.monto | currency}}</p>
+                    <p class="form-control-static">{{bono.Tasa.Moneda.Simbolo}} {{bono.monto | currency}}</p>
                 </div>
             </div>
             <!--tasa cambio-->
             <div class="form-group">
                 <label class="control-label col-sm-6">Tasa Cambio:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.tasa.valor | currency}}</p>
+                    <p class="form-control-static">{{bono.Tasa.Valor | currency}}</p>
                 </div>
             </div>
             <!--monto RD$-->
@@ -89,7 +89,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-6 text-left">Estado:</label>
                 <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.estadobono.descripcion}}</p>
+                    <p class="form-control-static">{{bono.EstadoBono.Descripcion}}</p>
                 </div>
             </div>
             <!--metodo pago-->
@@ -101,11 +101,11 @@
             </div>-->
         </div>
         </div>
-        <div ng-show="bono.estadobono.descripcion === 'Comprado'" class="row col-md-offset-1">
-            <button class="btn btn-success btn-lg fa fa-money" ng-click="pagarBono(bono.id)">  Pagar</button>
+        <div ng-show="bono.EstadoBono.Descripcion === 'Comprado'" class="row col-md-offset-1">
+            <button class="btn btn-success btn-lg fa fa-money" ng-click="pagarBono(bono.Id)">  Pagar</button>
         </div>
-        <div ng-show="bono.estadobono.descripcion === 'Cobrado'" class="row col-md-offset-1">
-            <button class="btn btn-warning btn-lg fa fa-print" ng-click="imprimirTicket(bono.id)">  Imprimir Ticket</button>
+        <div ng-show="bono.EstadoBono.Descripcion === 'Cobrado'" class="row col-md-offset-1">
+            <button class="btn btn-warning btn-lg fa fa-print" ng-click="imprimirTicket(bono.Id)">  Imprimir Ticket</button>
         </div>
     </form>
 </section>
