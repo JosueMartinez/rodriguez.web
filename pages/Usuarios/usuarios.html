@@ -4,16 +4,27 @@
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title"></h3>
+            
         </div>
         <div class="box-body table-responsive">
             <table id="bonosPagados" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th colspan="20">
-                            <div class="input-group">
-                                <input type="text" class="form-control" ng-model="search" placeholder="Buscar...">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group" style="display:inline-flex;">
+                                        <input type="text" class="form-control" ng-model="search" placeholder="Buscar...">
+                                    
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary pull-right  fa fa-user" ng-click="modalUsuario('/pages/Usuarios/crearUsuario.html','md',{})" style="margin-right:15px;"> Crear Usuario</button>
+                                </div>
                             </div>
+                            
                         </th>
+
                     </tr>
                     <tr>
                         <th class="text-center">Código</th>

@@ -1,0 +1,69 @@
+
+<form name="agregarUsuario" autocomplete="off" ng-submit="agregarUsuario.$valid && crearUsuario()" novalidate>
+    
+    <div class="modal-content">
+        <div class="box box-success">
+            <div class="box-body" style="display: block; padding: 0;">
+                <!-- .modal-header -->
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$close()">
+                        <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                    </button>
+                    <h4 class="modal-title">Agregar Usuario</h4>
+                </div>
+                <!-- /.modal-header -->
+
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <!--alerta de error-->
+                    <div class="alert alert-danger alert-dismissable" ng-show="agregarUsuario.$submitted && !agregarUsuario.$valid">
+                        <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Error!</strong> Corrija los errores antes de continuar.
+                    </div>
+                    <!-- / .alert-->
+                    <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Nombre Completo</label>
+                                <input type="text" name="nombre" class="form-control" placeholder="Nombre Completo" ng-model="usuario.NombreCompleto" required>
+                                <span class="text-danger" ng-show="agregarUsuario.$submitted && !agregarUsuario.nombre.$valid">Debe introducir un Nombre</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Usuario</label>
+                                <input type="text" name="username" class="form-control" placeholder="Usuario" ng-model="usuario.NombreUsuario" required>
+                                <span class="text-danger" ng-show="agregarUsuario.$submitted && agregarUsuario.username.$error.required">Debe introducir un nombre de usuario</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" ng-model="usuario.Contrasena" required>
+                                <span class="text-danger" ng-show="agregarUsuario.$submitted && agregarUsuario.contrasena.$error.required">Debe introducir una contraseña</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmar Contraseña</label>
+                                <input type="password" name="contrasena2" class="form-control" placeholder="Confirmar Contraseña" ng-model="usuario.ConfirmarContrasena" required>
+                                <span class="text-danger" ng-show="agregarUsuario.$submitted && agregarUsuario.contrasena2.$error.required">Debe confirmar la contraseña</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo Usuario</label>
+                                <select name="tipoUsuario" class="form-control" ng-options="c as c.Descripcion for c in roles track by c.Id" ng-model="usuario.RolId" required>
+                                    <option value="">Seleccione un Tipo</option>
+                                </select>
+                                <span class="text-danger" ng-show="agregarUsuario.$submitted && agregarUsuario.tipoUsuario.$error.required">Debe elegir un Tipo de Usuarios</span>
+                            </div>
+                    </div>
+                </div>
+                <!-- /.modal-body -->
+
+                
+            </div>
+            <!-- .box-footer-->
+            <div class="box-footer">
+                <button type="button" class="btn btn-default pull-left" ng-click="$close()"><i class="fa fa-times"></i> Cerrar</button>
+                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Crear</button>
+            </div>
+            <!-- /. box-footer-->
+            
+        </div>
+    </div>
+</form>
