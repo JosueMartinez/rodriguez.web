@@ -42,7 +42,7 @@
                         <td class="text-center">{{u.rol.Descripcion}}</td>
                         <td class="text-center" ng-hide="authentication.usuario.rol.descripcion === 'Empleado'">
                             <a ui-sref="master.bonoDetail({id: b.id})"><span class="fa fa-pencil" title="Editar"></span></a> |
-                            <a href ng-click="imprimirTicket(b.id)"><span class="fa fa-times text-danger" title="Eliminar"></span></a>
+                            <a href ng-click="borrarUsuario(u.Id)"><span class="fa fa-times text-danger" title="Eliminar"></span></a>
                         </td>
                     </tr>
                 </tbody>

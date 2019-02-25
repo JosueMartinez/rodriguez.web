@@ -40,14 +40,25 @@ u.service('usuarioServ', ['$http', 'settings', 'localStorageService', function($
                 });
             }
         },
-
-
+        borrarUsuario : function (id) {
+            var authData = localStorageService.get('authorizationData');
+            return $http({
+                method: 'DELETE',
+                url: settings.baseUrl + "usuarios/" + id,
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
+            }).then(function successCallback(response) {
+                return response.data;
+            }, function errorCallback(response) {
+                response.error = true;
+                return response;
+            });
+        },
     }
 
     return functions;
 }]);
 
-u.controller('usuarioController', function ($scope, $uibModal,localStorageService, Notification, $location, usuarioServ) {
+u.controller('usuarioController', function ($scope, $uibModal, localStorageService, Notification, $location, usuarioServ, $window) {
     $scope.pagina = "Usuarios";
     $scope.sitio = "Administración & Acceso al Sistema";
 
@@ -86,6 +97,25 @@ u.controller('usuarioController', function ($scope, $uibModal,localStorageServic
             });
         });;
     };
+
+    $scope.borrarUsuario = function (id) {
+        console.log("TEST");
+
+        var confirmar = $window.confirm("¿Seguro de querer borrar este Usuario?");
+        if (confirmar) {
+            usuarioServ.borrarUsuario(id).then(function (response) {
+                if (!response.error) {
+                    Notification.success({ message: 'Usuario borrado', delay: 5000 });
+                    usuarioServ.getUsuarios(authData).then(function (data) {
+                        $scope.usuarios = data;
+                    });
+                } else {
+                    Notification.error({ message: 'No se ha podido borrrar el Usuario', positionY: 'bottom', delay: 5000 });
+                }
+
+            });
+        }
+    };
 });
 
 u.controller('usuarioModalController', function ($uibModalInstance, usuarioServ, $scope, $http, settings, Notification){
@@ -108,5 +138,7 @@ u.controller('usuarioModalController', function ($uibModalInstance, usuarioServ,
             }
         })
     }
+
+    
 });
 
