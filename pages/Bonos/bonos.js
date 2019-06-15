@@ -226,6 +226,7 @@ var construirRecibo = function(bono) {
     recibo += '<p>RD$' + bono.montoRD + '</p>';
     recibo += '';
     recibo += '</div>';
+
     return recibo;
 }
 
