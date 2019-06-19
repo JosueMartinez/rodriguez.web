@@ -2,7 +2,7 @@
     var bonos = angular.module('bonos', ['base64']);
 
     //Servicio para bonos
-    bonos.service('bonoServ', ['$http', 'settings', 'localStorageService', function($http, settings, localStorageService, Notification) {
+    bonos.service('bonoServ', ['$http', 'settings', 'localStorageService', 'utilitiesServ', function($http, settings, localStorageService, utilitiesServ) {
 
         var functions = {
             obtenerBonos: function() {
@@ -59,14 +59,17 @@
                         var bono = response.data;
                         bono.Cliente.nombreCompleto = bono.Cliente.Nombres + ' ' + bono.Cliente.Apellidos;
                         bono.NombreDestinoCompleto = bono.NombreDestino + ' ' + bono.ApellidoDestino;
-                        bono.montoRD = bono.Monto * bono.Tasa.Valor;
+                        bono.montoRD = utilitiesServ.formatearNumero(bono.Monto * bono.Tasa.Valor);
+                        bono.FechaCompra = utilitiesServ.formatearFecha(bono.FechaCompra);
+                        bono.CedulaDestino = utilitiesServ.formatearCedula(bono.CedulaDestino);
                         var string = construirRecibo(bono);
-                        console.log(string);
+
                         var printWindow = window.open();
+                        console.log(printWindow);
                         printWindow.document.open('text/plain')
                         printWindow.document.write(string);
                         printWindow.document.close();
-                        printWindow.focus();
+                        //printWindow.focus();
                         printWindow.print();
                         printWindow.close();
                     });
@@ -221,7 +224,7 @@ var construirRecibo = function(bono) {
     recibo += '<p><b>Remitente</b></p>';
     recibo += '<p>' + bono.Cliente.NombreCompleto + '</p>';
     recibo += '<p><b>Destinatario</b></p>';
-    recibo += '<p>' + bono.nombreDestinoCompleto + '<br/>' + bono.CedulaDestino + '</p>';
+    recibo += '<p>' + bono.NombreDestinoCompleto + '<br/>' + bono.CedulaDestino + '</p>';
     recibo += '<p><b>Monto</b></p>';
     recibo += '<p>RD$' + bono.montoRD + '</p>';
     recibo += '';

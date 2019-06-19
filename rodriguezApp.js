@@ -1,4 +1,4 @@
-   var app = angular.module('rodriguezApp', ['bonos', 'producto', 'directives', 'routing', 'usuarios', 'tasas',
+   var app = angular.module('rodriguezApp', ['utilities', 'bonos', 'producto', 'directives', 'routing', 'usuarios', 'tasas',
        'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'angularUtils.directives.dirPagination',
        'angular-loading-bar', 'ui-notification'
    ]);
