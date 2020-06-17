@@ -29,9 +29,9 @@
                     </thead>
                     <!--Cuerpo de la tabla-->
                     <tbody>
-                        <tr ng-repeat="t in tasas" ng-show="t.Moneda.Simbolo !== 'RD'">
-                            <td class="text-center">{{t.Moneda.Simbolo}}</td>
-                            <td class="text-left">{{t.Moneda.Descripcion}}</td>
+                        <tr ng-repeat="t in tasas" ng-show="t.Simbolo !== 'RD'">
+                            <td class="text-center">{{t.Simbolo}}</td>
+                            <td class="text-left">{{t.Moneda}}</td>
                             <td class="text-center">{{t.Fecha  | date:"dd-MMM-yyyy '-' h:mma"}}</td>
                             <td class="text-center">{{t.Valor | currency}}</td>
                             <td>

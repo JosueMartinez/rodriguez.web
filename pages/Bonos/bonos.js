@@ -143,7 +143,6 @@
 
         //refresh cada 1 minuto
         $scope.intervalPromise = $interval(function() {
-            console.log('reloading');
             $scope.obtenerBonos();
         }, 60000);
 
