@@ -1,65 +1,92 @@
-(function () {
+(function() {
     var bonos = angular.module('bonos', ['base64']);
 
     //Servicio para bonos
-    bonos.service('bonoServ', ['$http', 'settings', 'localStorageService', function ($http, settings, localStorageService, Notification) {
+    bonos.service('bonoServ', ['$http', 'settings', 'localStorageService', 'utilitiesServ', function($http, settings, localStorageService, utilitiesServ) {
 
         var functions = {
-            obtenerBonos: function () {
+            obtenerBonos: function() {
                 var authData = localStorageService.get('authorizationData');
                 if (authData) {
                     return $http({
                         method: 'GET',
                         url: settings.baseUrl + "bonos",
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
-                    }).then(function (response) {
+                    }).then(function(response) {
                         return response.data;
                     });
                 }
             },
 
-            obtenerBonosPagados: function () {
+            obtenerBonosPagados: function() {
                 var authData = localStorageService.get('authorizationData');
                 if (authData) {
                     return $http({
                         method: 'GET',
                         url: settings.baseUrl + "bonosPagados",
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
-                    }).then(function (response) {
+                    }).then(function(response) {
                         return response.data;
                     });
                 }
 
             },
 
-            detalleBono: function (id) {
+            detalleBono: function(id) {
                 var authData = localStorageService.get('authorizationData');
                 if (authData) {
                     return $http({
                         method: 'GET',
                         url: settings.baseUrl + "bonos/" + id,
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
-                    }).then(function (response) {
+                    }).then(function(response) {
                         return response.data;
                     });
                 }
             },
 
-            imprimirTicket: function (id) {
-                alert('mandando a imprimir');
+            imprimirTicket: function(id) {
+                var authData = localStorageService.get('authorizationData');
+                if (authData) {
+                    return $http({
+                        method: 'GET',
+                        url: settings.baseUrl + "bonos/" + id,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + authData.token
+                        }
+                    }).then(function(response) {
+                        var bono = response.data;
+                        bono.Cliente.nombreCompleto = bono.Cliente.Nombres + ' ' + bono.Cliente.Apellidos;
+                        bono.NombreDestinoCompleto = bono.NombreDestino + ' ' + bono.ApellidoDestino;
+                        bono.montoRD = utilitiesServ.formatearNumero(bono.Monto * bono.Tasa.Valor);
+                        bono.FechaCompra = utilitiesServ.formatearFecha(bono.FechaCompra);
+                        bono.CedulaDestino = utilitiesServ.formatearCedula(bono.CedulaDestino);
+                        var string = construirRecibo(bono);
+
+                        var printWindow = window.open();
+                        console.log(printWindow);
+                        printWindow.document.open('text/plain')
+                        printWindow.document.write(string);
+                        printWindow.document.close();
+                        //printWindow.focus();
+                        printWindow.print();
+                        printWindow.close();
+                    });
+                }
             },
 
-            pagarBono: function (id) {
+            pagarBono: function(id) {
                 var authData = localStorageService.get('authorizationData');
                 if (authData) {
                     return $http({
                         method: 'PUT',
                         url: settings.baseUrl + "bonos/" + id + "/pagar",
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token }
-                    }).then(function (response) {
+                    }).then(function(response) {
                         response.error = false;
                         return response;
-                    }, function (response) {
+                    }, function(response) {
                         response.error = true;
                         return response;
                     });
@@ -73,20 +100,20 @@
 
 
 
-    bonos.controller('bonoController', function ($scope, bonoServ, localStorageService, $location, $window, Notification, $interval) {
+    bonos.controller('bonoController', function($scope, bonoServ, localStorageService, $location, $window, Notification, $interval) {
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
 
         var authData = localStorageService.get('authorizationData');
 
-        $scope.obtenerPagados = function () {
+        $scope.obtenerPagados = function() {
             if (authData) {
-                bonoServ.obtenerBonosPagados().then(function (data) {
+                bonoServ.obtenerBonosPagados().then(function(data) {
                     $scope.bonosPagados = data;
-                    $scope.bonosPagados.forEach(function (element) {
+                    $scope.bonosPagados.forEach(function(element) {
                         // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                        element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
-                        element.montoRd = element.monto * element.tasa.valor;
+                        element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
+                        element.MontoRd = element.Monto * element.Tasa.Valor;
                     }, this);
 
                 });
@@ -95,14 +122,14 @@
             }
         };
 
-        $scope.obtenerBonos = function(){
+        $scope.obtenerBonos = function() {
             if (authData) {
-                bonoServ.obtenerBonos().then(function (data) {
+                bonoServ.obtenerBonos().then(function(data) {
                     $scope.bonos = data;
-                    $scope.bonos.forEach(function (element) {
+                    $scope.bonos.forEach(function(element) {
                         // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                        element.nombreDestinoCompleto = element.nombreDestino + ' ' + element.apellidoDestino;
-                        element.montoRd = element.monto * element.tasa.valor;
+                        element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
+                        element.MontoRd = element.Monto * element.Tasa.Valor;
                     }, this);
 
                 });
@@ -110,23 +137,24 @@
                 $location.path('/login');
             }
         };
-        
+
         //leida inicial
         $scope.obtenerBonos();
 
         //refresh cada 1 minuto
-        $scope.intervalPromise = $interval(function(){
+        $scope.intervalPromise = $interval(function() {
             console.log('reloading');
             $scope.obtenerBonos();
-        }, 60000);  
+        }, 60000);
 
-        $scope.pagarBono = function (id) {
+        $scope.pagarBono = function(id) {
             var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
             if (confirmar) {
-                bonoServ.pagarBono(id).then(function (response) {
+                bonoServ.pagarBono(id).then(function(response) {
                     if (!response.error) {
+
                         Notification.success({ message: 'Se ha pagado con éxito', delay: 5000 });
-                        bonoServ.obtenerBonos(authData).then(function (data) {
+                        bonoServ.obtenerBonos(authData).then(function(data) {
                             $scope.bonos = data;
                         });
                     } else {
@@ -136,7 +164,7 @@
             }
         };
 
-        $scope.imprimirTicket = function (id) {
+        $scope.imprimirTicket = function(id) {
             var confirmar = $window.confirm("¿Seguro de querer imprimir el recibo?");
             if (confirmar) {
                 bonoServ.imprimirTicket(id);
@@ -146,36 +174,35 @@
 
     });
 
-    bonos.controller('bonoDetalleController', function ($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window) {
+    bonos.controller('bonoDetalleController', function($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window) {
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
         $scope.bono = {};
         var authData = localStorageService.get('authorizationData');
 
-        bonoServ.detalleBono($stateParams.id).then(function (data) {
-
+        bonoServ.detalleBono($stateParams.id).then(function(data) {
             $scope.bono = data;
             // $scope.bono.metodoPago = paypalService.getPayment($scope.bono.paypalId);
-            $scope.bono.cliente.nombreCompleto = $scope.bono.cliente.nombres + ' ' + $scope.bono.cliente.apellidos;
-            $scope.bono.nombreDestinoCompleto = $scope.bono.nombreDestino + ' ' + $scope.bono.apellidoDestino;
-            $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
+            $scope.bono.Cliente.nombreCompleto = $scope.bono.Cliente.Nombres + ' ' + $scope.bono.Cliente.Apellidos;
+            $scope.bono.NombreDestinoCompleto = $scope.bono.NombreDestino + ' ' + $scope.bono.ApellidoDestino;
+            $scope.bono.montoRD = $scope.bono.Monto * $scope.bono.Tasa.Valor;
         });
 
-        $scope.pagarBono = function (id) {
+        $scope.pagarBono = function(id) {
             var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
             if (confirmar) {
-                bonoServ.pagarBono(id).then(function (data) {
-                    bonoServ.detalleBono(id).then(function (data) {
+                bonoServ.pagarBono(id).then(function(data) {
+                    bonoServ.detalleBono(id).then(function(data) {
                         $scope.bono = data;
-                        $scope.bono.cliente.nombreCompleto = $scope.bono.cliente.nombres + ' ' + $scope.bono.cliente.apellidos;
-                        $scope.bono.nombreDestinoCompleto = $scope.bono.nombreDestino + ' ' + $scope.bono.apellidoDestino;
-                        $scope.bono.montoRD = $scope.bono.monto * $scope.bono.tasa.valor;
+                        $scope.bono.Cliente.nombreCompleto = $scope.bono.Cliente.Nombres + ' ' + $scope.bono.Cliente.Apellidos;
+                        $scope.bono.NombreDestinoCompleto = $scope.bono.NombreDestino + ' ' + $scope.bono.ApellidoDestino;
+                        $scope.bono.montoRD = $scope.bono.Monto * $scope.bono.Tasa.Valor;
                     });
                 });
             }
         };
 
-        $scope.imprimirTicket = function (id) {
+        $scope.imprimirTicket = function(id) {
             var confirmar = $window.confirm("¿Seguro de querer imprimir el recibo?");
             if (confirmar) {
                 bonoServ.imprimirTicket(id);
@@ -184,6 +211,27 @@
     });
 })();
 
+var construirRecibo = function(bono) {
+    var recibo = '<div id="recibo" data-ng-controller="bonoDetalleController">';
+    recibo += '<h4 style="text-align: center">Supermercado Rodriguez</h4>';
+    recibo += '<small style="text-align: center">Carretera Veragua-Gaspar Hernandez, Espaillat, R.D.</small>';
+    recibo += '<small style = "text-align: center">809-739-0788 </small><br />';
+    recibo += '<h6 style="text-align:center;">RECIBO DE PAGO</h6>'
+    recibo += '<table>';
+    recibo += '<tr><th>Referencia</th><th>Fecha</th></tr>';
+    recibo += '<tr><td>' + bono.Id + '</td><td>' + bono.FechaCompra + '</td></tr>';
+    recibo += '</table>';
+    recibo += '<p><b>Remitente</b></p>';
+    recibo += '<p>' + bono.Cliente.NombreCompleto + '</p>';
+    recibo += '<p><b>Destinatario</b></p>';
+    recibo += '<p>' + bono.NombreDestinoCompleto + '<br/>' + bono.CedulaDestino + '</p>';
+    recibo += '<p><b>Monto</b></p>';
+    recibo += '<p>RD$' + bono.montoRD + '</p>';
+    recibo += '';
+    recibo += '</div>';
+
+    return recibo;
+}
 
 
 // app.factory('paypalService', ['$http', '$q', 'localStorageService', 'settings', '$base64', function ($http, $q, localStorageService, settings, $base64){

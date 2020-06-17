@@ -31,27 +31,27 @@
                         </thead>
                         <!--Cuerpo de la tabla-->
                         <tbody>
-                            <tr dir-paginate="b in bonos | filter: search  | itemsPerPage: 10"  pagination-id="bonos">
-                                <td class="text-center">{{b.id}}</td>
-                                <td class="text-center">{{b.cliente.nombreCompleto}}</td>
-                                <td class="text-center">{{b.nombreDestinoCompleto}}</td>
-                                <td class="text-center">{{b.cedulaDestino}}</td>  
-                                <td class="text-center">{{b.fechaCompra | date:'dd MMMM yyyy'}}</td>
-                                <td class="text-center">{{b.tasa.moneda.simbolo}} {{b.monto | currency}}</td>
-                                <td class="text-center">{{b.tasa.valor}}</td>
-                                <td class="text-center">RD$ {{ b.montoRd | currency}}</td>
-                                <td class="text-center">{{b.estadobono.descripcion}}</td>
-                                <td class="text-center"><a ui-sref="master.bonoDetail({id: b.id})" ><span class="fa fa-eye" title="Ver"></span></a> |
+                            <tr dir-paginate="b in bonos | filter: search  | itemsPerPage: 10" pagination-id="bonos">
+                                <td class="text-center">{{b.Id}}</td>
+                                <td class="text-center">{{b.Cliente.NombreCompleto}}</td>
+                                <td class="text-center">{{b.NombreDestinoCompleto}}</td>
+                                <td class="text-center">{{b.CedulaDestino}}</td>
+                                <td class="text-center">{{b.FechaCompra | date:'dd MMMM yyyy'}}</td>
+                                <td class="text-center">{{b.Tasa.Moneda.Simbolo}} {{b.Monto | currency}}</td>
+                                <td class="text-center">{{b.Tasa.Valor}}</td>
+                                <td class="text-center">RD$ {{ b.MontoRd | currency}}</td>
+                                <td class="text-center">{{b.EstadoBono.Descripcion}}</td>
+                                <td class="text-center"><a ui-sref="master.bonoDetail({id: b.Id})"><span class="fa fa-eye" title="Ver"></span></a> |
                                     <a href ng-click="pagarBono(b.id)"><span class="fa fa-money text-success" title="Pagar"></span></a>
                                 </td>
                             </tr>
                         </tbody>
                         <!--Fin cuerpo de la tabla-->
                     </table>
-                    <dir-pagination-controls  pagination-id="bonos"></dir-pagination-controls>
+                    <dir-pagination-controls pagination-id="bonos"></dir-pagination-controls>
                 </div>
                 <!--/.box-header-->
-          </div>
+            </div>
         </uib-tab>
 
         <!--Bonos Pagados-->
@@ -85,25 +85,25 @@
                         </thead>
                         <!--Cuerpo de la tabla-->
                         <tbody>
-                            <tr dir-paginate="b in bonosPagados | filter: searchPagados  | itemsPerPage: 10"  pagination-id="pagados">
-                                <td class="text-center">{{b.id}}</td>
-                                <td class="text-center">{{b.cliente.nombreCompleto}}</td>
-                                <td class="text-center">{{b.nombreDestinoCompleto}}</td>
-                                <td class="text-center">{{b.cedulaDestino}}</td>  
-                                <td class="text-center">{{b.fechaCompra | date:'dd MMMM yyyy'}}</td>
-                                <td class="text-center">{{b.tasa.moneda.simbolo}} {{b.monto | currency}}</td>
-                                <td class="text-center">{{b.tasa.valor}}</td>
-                                <td class="text-center">RD$ {{ b.montoRd | currency}}</td>
-                                <td class="text-center">{{b.estadobono.descripcion}}</td>
+                            <tr dir-paginate="b in bonosPagados | filter: searchPagados  | itemsPerPage: 10" pagination-id="pagados">
+                                <td class="text-center">{{b.Id}}</td>
+                                <td class="text-center">{{b.Cliente.NombreCompleto}}</td>
+                                <td class="text-center">{{b.NombreDestinoCompleto}}</td>
+                                <td class="text-center">{{b.CedulaDestino}}</td>
+                                <td class="text-center">{{b.FechaCompra | date:'dd MMMM yyyy'}}</td>
+                                <td class="text-center">{{b.Tasa.Moneda.Simbolo}} {{b.monto | currency}}</td>
+                                <td class="text-center">{{b.Tasa.Valor}}</td>
+                                <td class="text-center">RD$ {{ b.MontoRd | currency}}</td>
+                                <td class="text-center">{{b.EstadoBono.Descripcion}}</td>
                                 <td class="text-center">
-                                    <a ui-sref="master.bonoDetail({id: b.id})" ><span class="fa fa-eye" title="Ver"></span></a> |
-                                    <a href ng-click="imprimirTicket(b.id)"><span class="fa fa-print text-warning" title="Imprimir Recibo"></span></a>
+                                    <a ui-sref="master.bonoDetail({id: b.Id})"><span class="fa fa-eye" title="Ver"></span></a> |
+                                    <a href ng-click="imprimirTicket(b.Id)"><span class="fa fa-print text-warning" title="Imprimir Recibo"></span></a>
                                 </td>
                             </tr>
                         </tbody>
                         <!--Fin cuerpo de la tabla-->
                     </table>
-                    <dir-pagination-controls  pagination-id="pagados"></dir-pagination-controls>
+                    <dir-pagination-controls pagination-id="pagados"></dir-pagination-controls>
                 </div>
                 <!--/.box-header-->
             </div>

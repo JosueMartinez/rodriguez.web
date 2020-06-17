@@ -1,111 +1,66 @@
 <content-header></content-header>
 <section class="content">
-    <h4 class="text-primary">Información Detallada del Bono Seleccionado</h4>
-    <form class="form-horizontal">
-        <div class="row">
-        <div class="col-md-4 col-sm-6">
-            <!--ID del bono-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">ID:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.id}}</p>
-                </div>
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Información Detallada del Bono Seleccionado</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
-            <!--fecha-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Fecha Compra:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.fechaCompra | date:"dd-MMM-yyyy" }}</p>
-                </div>
-            </div>
-            <!--comprador-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Comprador:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.cliente.nombreCompleto}}</p>
-                </div>
-            </div>
-            <!--cedula comprador-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Cédula Comprador:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.cliente.cedula}}</p>
-                </div>
-            </div>
-            <!--telefono comprador-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Teléfono Comprador:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.cliente.celular}}</p>
-                </div>
-            </div>
-            <!--destinatario-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Destinatario:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.nombreDestinoCompleto}}</p>
-                </div>
-            </div>
-            <!--cedula destinatario-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Cédula Destinatario:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.cedulaDestino}}</p>
-                </div>
-            </div>
-            <!--telefono destinatario-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Teléfono Destinatario:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.telefonoDestino}}</p>
-                </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+            <div class="row">
+                <table class="table table-responsive">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="witdh:20%;" class="text-right"><label>ID</label></td>
+                            <td witdh=“30%”>{{bono.Id}}</td>
+                            <td witdh=“20%” class="text-right"><label>Teléfono Comprador</label></td>
+                            <td witdh=“30%”>{{bono.Cliente.Celular}}</td>
+                            <td style="witdh:20%;" class="text-right"><label>Monto</label></td>
+                            <td witdh=“30%”>{{bono.Tasa.Moneda.Simbolo}} {{bono.monto | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><label>Fecha Compra</label></td>
+                            <td>{{bono.FechaCompra | date:"dd-MMM-yyyy" }}</td>
+                            <td class="text-right"><label>Destinatario</label></td>
+                            <td>{{bono.NombreDestinoCompleto}}</td>
+                            <td class="text-right"><label>Tasa Cambio</label></td>
+                            <td>{{bono.Tasa.Valor | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><label>Comprador</label></td>
+                            <td>{{bono.Cliente.NombreCompleto}}</td>
+                            <td class="text-right"><label>Cédula Destinatario</label></td>
+                            <td>{{bono.CedulaDestino}}</td>
+                            <td class="text-right"><label>Monto RD$</label></td>
+                            <td>RD$ {{bono.montoRD | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td style="witdh:20%;" class="text-right"><label>Cédula Comprador</label></td>
+                            <td witdh=“30%”>{{bono.Cliente.Cedula}}</td>
+                            <td style="witdh:20%;" class="text-right"><label>Telefono Destinatario</label></td>
+                            <td witdh=“30%”>{{bono.TelefonoDestino}}</td>
+                            <td style="witdh:20%;" class="text-right"><label>Estado</label></td>
+                            <td witdh=“30%”>{{bono.EstadoBono.Descripcion}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
-
-        <div class="col-md-4 col-sm-6">            
-            <!--monto-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Monto:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.tasa.moneda.simbolo}} {{bono.monto | currency}}</p>
-                </div>
+        <div class="box-footer">
+            <div ng-show="bono.EstadoBono.Descripcion === 'Comprado'" class="row col-md-offset-1">
+                <button class="btn btn-success pull-right  fa fa-money" ng-click="pagarBono(bono.Id)" style="margin-right:15px;"> Pagar</button>
             </div>
-            <!--tasa cambio-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Tasa Cambio:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.tasa.valor | currency}}</p>
-                </div>
+            <div ng-show="bono.EstadoBono.Descripcion === 'Cobrado'" class="row col-md-offset-1">
+                <button class="btn btn-warning pull-right fa fa-print" ng-click="imprimirTicket(bono.Id)" style="margin-right:15px;"> Imprimir Ticket</button>
             </div>
-            <!--monto RD$-->
-            <div class="form-group">
-                <label class="control-label col-sm-6">Monto RD$:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">RD$ {{bono.montoRD | currency}}</p>
-                </div>
-            </div>
-            <!--estado-->
-            <div class="form-group">
-                <label class="control-label col-sm-6 text-left">Estado:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static">{{bono.estadobono.descripcion}}</p>
-                </div>
-            </div>
-            <!--metodo pago-->
-            <!--<div class="form-group">
-                <label class="control-label col-sm-6">Método Pago:</label>
-                <div class="col-sm-6">
-                    <p class="form-control-static"><i class="fa fa-credit-card" aria-hidden="true"></i>{{bono.metodoPago}}</p>
-                </div>
-            </div>-->
         </div>
-        </div>
-        <div ng-show="bono.estadobono.descripcion === 'Comprado'" class="row col-md-offset-1">
-            <button class="btn btn-success btn-lg fa fa-money" ng-click="pagarBono(bono.id)">  Pagar</button>
-        </div>
-        <div ng-show="bono.estadobono.descripcion === 'Cobrado'" class="row col-md-offset-1">
-            <button class="btn btn-warning btn-lg fa fa-print" ng-click="imprimirTicket(bono.id)">  Imprimir Ticket</button>
-        </div>
-    </form>
+        <!-- /.box-body -->
+    </div>
 </section>
