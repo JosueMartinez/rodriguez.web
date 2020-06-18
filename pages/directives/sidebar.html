@@ -13,48 +13,57 @@
             <!--/.user-panel-->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                <li class="header">MENU</li>
-                <!--Menu Bonos-->
+                    <li class="header">MENU</li>
+                    <!--Menu Bonos-->
                     <li>
-                    <a href="#/Bonos"><i class="fa fa-money"></i> <span>Bonos</span></a>
-                </li>
-                <!--Fin menu Bonos-->
+                        <a href="#/Bonos"><i class="fa fa-money"></i> <span>Bonos</span></a>
+                    </li>
+                    <!--Fin menu Bonos-->
 
-                <!--Menu Productos-->
-                <!-- <li> -->
-                <!-- <a href="#/Productos" ><i class="fa fa-shopping-cart"></i> <span>Productos</span></a> -->
-                <!-- </li> -->
-                <!--Fin menu Productos-->
+                    <!--Menu Productos-->
+                    <!-- <li> -->
+                        <!-- <a href="#/Productos" ><i class="fa fa-shopping-cart"></i> <span>Productos</span></a> -->
+                    <!-- </li> -->
+                    <!--Fin menu Productos-->
+                    
+                    <li>
+                        <a href="#/Tasas"><i class="fa fa-usd"></i> Tasa Cambiaria</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="#/Usuarios"><i class="fa fa-user"></i> Usuarios</a>
+                    </li>
+                    
+
                     <!--Reportes-->
                     <li class="treeview">
-                    <a href="">
-                        <i class="fa fa-bar-chart-o"></i> <span>Reportes</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Reporte 1</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Reporte 2</a></li>
-                    </ul>
-                </li>
-                <!--Fin Reportes-->
+                        <a href="">
+                            <i class="fa fa-bar-chart-o"></i> <span>Reportes</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Reporte 1</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Reporte 2</a></li>
+                        </ul>
+                    </li>
+                    <!--Fin Reportes-->
                     <!--Administracion-->
-                <li class="treeview" ng-hide="authentication.usuario.rol.descripcion === 'Empleado'">
-                    <a href="">
-                        <i class="fa fa-gears"></i> <span>Administración</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a href="#/Usuarios"><i class="fa fa-user"></i> Usuarios</a></li>
-                        <!--<li><a href="#Prueba404"><i class="fa fa-lock"></i> Roles</a></li>-->
-                        <li><a href="#/Tasas"><i class="fa fa-usd"></i> Tasa Cambiaria</a></li>
-                    </ul>
-                </li>
-                <!--Fin Administracion-->
-                    </ul>
+                    <!-- <li class="treeview" ng-hide="authentication.usuario.rol.descripcion === 'Empleado'">
+                        <a href="">
+                            <i class="fa fa-gears"></i> <span>Administración</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="active"><a href="#/Usuarios"><i class="fa fa-user"></i> Usuarios</a></li>                            
+                            <li><a href="#/Tasas"><i class="fa fa-usd"></i> Tasa Cambiaria</a></li>
+                        </ul>
+                    </li> -->
+                    <!--Fin Administracion-->
+                </ul>
             </section>
         <!-- /.sidebar -->
         </aside>
