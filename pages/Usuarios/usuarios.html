@@ -39,9 +39,9 @@
                         <td class="text-center">{{u.Id}}</td>
                         <td class="text-center">{{u.NombreUsuario}}</td>
                         <td class="text-center">{{u.NombreCompleto}}</td>
-                        <td class="text-center">{{u.Rol.Descripcion}}</td>
+                        <td class="text-center">{{u.Rol}}</td>
                         <td class="text-center" ng-hide="authentication.usuario.rol.descripcion === 'Empleado'">
-                            <a ui-sref="master.bonoDetail({id: b.id})"><span class="fa fa-pencil" title="Editar"></span></a> |
+                            <!-- <a ui-sref="master.bonoDetail({id: u.id})"><span class="fa fa-pencil" title="Editar"></span></a> | -->
                             <a href ng-click="borrarUsuario(u.Id)"><span class="fa fa-times text-danger" title="Eliminar"></span></a>
                         </td>
                     </tr>
