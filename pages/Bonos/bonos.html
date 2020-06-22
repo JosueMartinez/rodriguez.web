@@ -33,14 +33,14 @@
                         <tbody>
                             <tr dir-paginate="b in bonos | filter: search  | itemsPerPage: 10" pagination-id="bonos">
                                 <td class="text-center">{{b.Id}}</td>
-                                <td class="text-center">{{b.Cliente.NombreCompleto}}</td>
-                                <td class="text-center">{{b.NombreDestinoCompleto}}</td>
+                                <td class="text-center">{{b.Remitente}}</td>
+                                <td class="text-center">{{b.Destinatario}}</td>
                                 <td class="text-center">{{b.CedulaDestino}}</td>
                                 <td class="text-center">{{b.FechaCompra | date:'dd MMMM yyyy'}}</td>
-                                <td class="text-center">{{b.Tasa.Moneda.Simbolo}} {{b.Monto | currency}}</td>
-                                <td class="text-center">{{b.Tasa.Valor}}</td>
-                                <td class="text-center">RD$ {{ b.MontoRd | currency}}</td>
-                                <td class="text-center">{{b.EstadoBono.Descripcion}}</td>
+                                <td class="text-center">{{b.SimboloMonedaOriginal}} {{b.Monto | currency}}</td>
+                                <td class="text-center">{{b.Tasa}}</td>
+                                <td class="text-center">RD$ {{ b.Tasa * b.Monto | currency}}</td>
+                                <td class="text-center">{{b.EstadoBono}}</td>
                                 <td class="text-center"><a ui-sref="master.bonoDetail({id: b.Id})"><span class="fa fa-eye" title="Ver"></span></a> |
                                     <a href ng-click="pagarBono(b.id)"><span class="fa fa-money text-success" title="Pagar"></span></a>
                                 </td>
@@ -87,14 +87,14 @@
                         <tbody>
                             <tr dir-paginate="b in bonosPagados | filter: searchPagados  | itemsPerPage: 10" pagination-id="pagados">
                                 <td class="text-center">{{b.Id}}</td>
-                                <td class="text-center">{{b.Cliente.NombreCompleto}}</td>
-                                <td class="text-center">{{b.NombreDestinoCompleto}}</td>
+                                <td class="text-center">{{b.Remitente}}</td>
+                                <td class="text-center">{{b.Destinatario}}</td>
                                 <td class="text-center">{{b.CedulaDestino}}</td>
                                 <td class="text-center">{{b.FechaCompra | date:'dd MMMM yyyy'}}</td>
-                                <td class="text-center">{{b.Tasa.Moneda.Simbolo}} {{b.monto | currency}}</td>
-                                <td class="text-center">{{b.Tasa.Valor}}</td>
-                                <td class="text-center">RD$ {{ b.MontoRd | currency}}</td>
-                                <td class="text-center">{{b.EstadoBono.Descripcion}}</td>
+                                <td class="text-center">{{b.SimboloMonedaOriginal}} {{b.Monto | currency}}</td>
+                                <td class="text-center">{{b.Tasa}}</td>
+                                <td class="text-center">RD$ {{ b.Tasa * b.Monto | currency}}</td>
+                                <td class="text-center">{{b.EstadoBono}}</td>
                                 <td class="text-center">
                                     <a ui-sref="master.bonoDetail({id: b.Id})"><span class="fa fa-eye" title="Ver"></span></a> |
                                     <a href ng-click="imprimirTicket(b.Id)"><span class="fa fa-print text-warning" title="Imprimir Recibo"></span></a>

@@ -126,11 +126,11 @@
             if (authData) {
                 bonoServ.obtenerBonos().then(function(data) {
                     $scope.bonos = data;
-                    $scope.bonos.forEach(function(element) {
-                        // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                        element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
-                        element.MontoRd = element.Monto * element.Tasa.Valor;
-                    }, this);
+                    // $scope.bonos.forEach(function(element) {
+                    //     // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
+                    //     // element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
+                    //     // element.MontoRd = element.Monto * element.Tasa.Valor;
+                    // }, this);
 
                 });
             } else {
