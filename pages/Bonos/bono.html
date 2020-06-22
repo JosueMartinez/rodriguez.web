@@ -3,11 +3,6 @@
     <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Información Detallada del Bono Seleccionado</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
@@ -20,33 +15,33 @@
                             <td style="witdh:20%;" class="text-right"><label>ID</label></td>
                             <td witdh=“30%”>{{bono.Id}}</td>
                             <td witdh=“20%” class="text-right"><label>Teléfono Comprador</label></td>
-                            <td witdh=“30%”>{{bono.Cliente.Celular}}</td>
+                            <td witdh=“30%”>{{bono.telefonoRemitente}}</td>
                             <td style="witdh:20%;" class="text-right"><label>Monto</label></td>
-                            <td witdh=“30%”>{{bono.Tasa.Moneda.Simbolo}} {{bono.monto | currency}}</td>
+                            <td witdh=“30%”>{{bono.SimboloMonedaOriginal}} {{bono.Monto | currency}}</td>
                         </tr>
                         <tr>
                             <td class="text-right"><label>Fecha Compra</label></td>
                             <td>{{bono.FechaCompra | date:"dd-MMM-yyyy" }}</td>
                             <td class="text-right"><label>Destinatario</label></td>
-                            <td>{{bono.NombreDestinoCompleto}}</td>
+                            <td>{{bono.Destinatario}}</td>
                             <td class="text-right"><label>Tasa Cambio</label></td>
-                            <td>{{bono.Tasa.Valor | currency}}</td>
+                            <td>{{bono.Tasa | currency}}</td>
                         </tr>
                         <tr>
                             <td class="text-right"><label>Comprador</label></td>
-                            <td>{{bono.Cliente.NombreCompleto}}</td>
+                            <td>{{bono.Remitente}}</td>
                             <td class="text-right"><label>Cédula Destinatario</label></td>
                             <td>{{bono.CedulaDestino}}</td>
                             <td class="text-right"><label>Monto RD$</label></td>
-                            <td>RD$ {{bono.montoRD | currency}}</td>
+                            <td>RD$ {{bono.Monto * bono.Tasa | currency}}</td>
                         </tr>
                         <tr>
                             <td style="witdh:20%;" class="text-right"><label>Cédula Comprador</label></td>
-                            <td witdh=“30%”>{{bono.Cliente.Cedula}}</td>
+                            <td witdh=“30%”>{{bono.CedulaRemitente}}</td>
                             <td style="witdh:20%;" class="text-right"><label>Telefono Destinatario</label></td>
                             <td witdh=“30%”>{{bono.TelefonoDestino}}</td>
                             <td style="witdh:20%;" class="text-right"><label>Estado</label></td>
-                            <td witdh=“30%”>{{bono.EstadoBono.Descripcion}}</td>
+                            <td witdh=“30%”>{{bono.EstadoBono}}</td>
                         </tr>
                     </tbody>
                 </table>
