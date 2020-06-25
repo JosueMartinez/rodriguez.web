@@ -42,7 +42,7 @@
                                 <td class="text-center">RD$ {{ b.Tasa * b.Monto | currency}}</td>
                                 <td class="text-center">{{b.EstadoBono}}</td>
                                 <td class="text-center"><a ui-sref="master.bonoDetail({id: b.Id})"><span class="fa fa-eye" title="Ver"></span></a> |
-                                    <a href ng-click="pagarBono(b.id)"><span class="fa fa-money text-success" title="Pagar"></span></a>
+                                    <a href ng-click="pagarBono(b.Id)"><span class="fa fa-money text-success" title="Pagar"></span></a>
                                 </td>
                             </tr>
                         </tbody>
