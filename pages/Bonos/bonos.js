@@ -57,15 +57,10 @@
                         }
                     }).then(function(response) {
                         var bono = response.data;
-                        bono.Cliente.nombreCompleto = bono.Cliente.Nombres + ' ' + bono.Cliente.Apellidos;
-                        bono.NombreDestinoCompleto = bono.NombreDestino + ' ' + bono.ApellidoDestino;
-                        bono.montoRD = utilitiesServ.formatearNumero(bono.Monto * bono.Tasa.Valor);
-                        bono.FechaCompra = utilitiesServ.formatearFecha(bono.FechaCompra);
-                        bono.CedulaDestino = utilitiesServ.formatearCedula(bono.CedulaDestino);
+                        console.log(bono);
                         var string = construirRecibo(bono);
 
                         var printWindow = window.open();
-                        console.log(printWindow);
                         printWindow.document.open('text/plain')
                         printWindow.document.write(string);
                         printWindow.document.close();
@@ -126,11 +121,11 @@
             if (authData) {
                 bonoServ.obtenerBonos().then(function(data) {
                     $scope.bonos = data;
-                    $scope.bonos.forEach(function(element) {
-                        // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                        element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
-                        element.MontoRd = element.Monto * element.Tasa.Valor;
-                    }, this);
+                    // $scope.bonos.forEach(function(element) {
+                    //     // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
+                    //     // element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
+                    //     // element.MontoRd = element.Monto * element.Tasa.Valor;
+                    // }, this);
 
                 });
             } else {
@@ -143,7 +138,6 @@
 
         //refresh cada 1 minuto
         $scope.intervalPromise = $interval(function() {
-            console.log('reloading');
             $scope.obtenerBonos();
         }, 60000);
 
@@ -222,65 +216,13 @@ var construirRecibo = function(bono) {
     recibo += '<tr><td>' + bono.Id + '</td><td>' + bono.FechaCompra + '</td></tr>';
     recibo += '</table>';
     recibo += '<p><b>Remitente</b></p>';
-    recibo += '<p>' + bono.Cliente.NombreCompleto + '</p>';
+    recibo += '<p>' + bono.Remitente + '</p>';
     recibo += '<p><b>Destinatario</b></p>';
-    recibo += '<p>' + bono.NombreDestinoCompleto + '<br/>' + bono.CedulaDestino + '</p>';
+    recibo += '<p>' + bono.Destinatario + '<br/>' + bono.CedulaDestino + '</p>';
     recibo += '<p><b>Monto</b></p>';
-    recibo += '<p>RD$' + bono.montoRD + '</p>';
+    recibo += '<p>RD$' + bono.Monto * bono.Tasa + '</p>';
     recibo += '';
     recibo += '</div>';
 
     return recibo;
 }
-
-
-// app.factory('paypalService', ['$http', '$q', 'localStorageService', 'settings', '$base64', function ($http, $q, localStorageService, settings, $base64){
-//     var serviceBase = settings.PayPalApiUrl;
-//     var clienteId = settings.PayPalClientId;
-//     var apiSecret = settings.PayPalSecret;
-//     var paypalServiceFactory = {};
-
-//     var _login = function (loginData) {
-//         var auth = $base64.encode(clienteId + ":" + apiSecret);
-//         var data = {"grant_type": "client_credentials"};
-//         var deferred = $q.defer();
-
-//         $http({
-//             method: 'POST',
-//             url: serviceBase + 'oauth2/token?grant_type=client_credentials',
-//             // data: data,
-//             headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization':'Basic ' + auth}
-//         }).then(function(response){
-//             localStorageService.set('paypalAuthorization', { token: response.data.access_token});
-//             // console.log(response.data.access_token);
-//                 // deferred.resolve(response);
-//         },function(response){
-//                 // deferred.reject(response);
-//         });
-
-//         return deferred.promise;
-//     };
-
-//     var _getPayment = function(paymentId){
-//         var paypalToken = localStorageService.get('paypalAuthorization');
-//         if(!paypalToken){
-//             _login().then(function(response){
-//                 paypalToken = response.data;
-//             });
-//         }
-
-//         return $http({
-//                     method: 'GET',
-//                     url: serviceBase + 'payments/payment/' + paymentId,
-//                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + paypalToken.token}
-//                 }).then(function (response) {
-//                     console.log(response.data);
-//                     return response.data;
-//                 });
-//     }
-
-//     paypalServiceFactory.login = _login;
-//     paypalServiceFactory.getPayment = _getPayment;
-
-//     return paypalServiceFactory;
-// }]);

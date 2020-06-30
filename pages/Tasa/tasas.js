@@ -16,7 +16,7 @@ tasa.service('tasaServ', ['$http', 'settings', 'localStorageService', function (
         
         return  $http({
             method: 'GET',
-            url: settings.baseUrl + "monedas/"+moneda.Id+"/historial",
+            url: settings.baseUrl + "monedas/" + moneda + "/historial",
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authData.token}
         }).then(function (response) {
             return response.data;
