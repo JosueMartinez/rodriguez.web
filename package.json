@@ -1,0 +1,24 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "[Live Demo](https://josuemartinez.github.io/rodriguez.web/)",
+  "main": "rodriguezApp.js",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test",
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosueMartinez/rodriguez.web.git"
+  },
+  "author": "JosueMartinez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JosueMartinez/rodriguez.web/issues"
+  },
+  "homepage": "https://github.com/JosueMartinez/rodriguez.web#readme"
+}
