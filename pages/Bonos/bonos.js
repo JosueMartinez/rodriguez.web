@@ -121,12 +121,6 @@
             if (authData) {
                 bonoServ.obtenerBonos().then(function(data) {
                     $scope.bonos = data;
-                    // $scope.bonos.forEach(function(element) {
-                    //     // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                    //     // element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
-                    //     // element.MontoRd = element.Monto * element.Tasa.Valor;
-                    // }, this);
-
                 });
             } else {
                 $location.path('/login');
@@ -142,27 +136,46 @@
         }, 60000);
 
         $scope.pagarBono = function(id) {
-            var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
-            if (confirmar) {
-                bonoServ.pagarBono(id).then(function(response) {
-                    if (!response.error) {
 
-                        Notification.success({ message: 'Se ha pagado con éxito', delay: 5000 });
-                        bonoServ.obtenerBonos(authData).then(function(data) {
-                            $scope.bonos = data;
-                        });
-                    } else {
-                        Notification.error({ message: 'Ha ocurrido un error', positionY: 'bottom', delay: 5000 });
-                    }
-                });
-            }
+            Swal.fire({
+                title: '¿Seguro de querer pagar este bono?',
+                text: "Se impirmira su ticket",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.value) { 
+                    
+                    bonoServ.pagarBono(id).then(function (response) {
+                        if (!response.error) {
+                            Notification.success({ message: 'Se ha pagado con éxito', delay: 5000 });
+                            bonoServ.obtenerBonos(authData).then(function(data) {
+                                $scope.bonos = data;
+                            });
+                        } else {
+                            Notification.error({ message: 'Ha ocurrido un error', positionY: 'bottom', delay: 5000 });
+                        }
+                    });
+                }
+            })
         };
 
         $scope.imprimirTicket = function(id) {
-            var confirmar = $window.confirm("¿Seguro de querer imprimir el recibo?");
-            if (confirmar) {
+
+            Swal.fire({
+                title: '¿Seguro de querer imprimir el recibo?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
                 bonoServ.imprimirTicket(id);
-            }
+            });
         }
 
 
@@ -183,24 +196,47 @@
         });
 
         $scope.pagarBono = function(id) {
-            var confirmar = $window.confirm("¿Seguro de querer pagar el bono?");
-            if (confirmar) {
-                bonoServ.pagarBono(id).then(function(data) {
-                    bonoServ.detalleBono(id).then(function(data) {
-                        $scope.bono = data;
-                        $scope.bono.Cliente.nombreCompleto = $scope.bono.Cliente.Nombres + ' ' + $scope.bono.Cliente.Apellidos;
-                        $scope.bono.NombreDestinoCompleto = $scope.bono.NombreDestino + ' ' + $scope.bono.ApellidoDestino;
-                        $scope.bono.montoRD = $scope.bono.Monto * $scope.bono.Tasa.Valor;
+            Swal.fire({
+                title: '¿Seguro de querer pagar este bono?',
+                text: "Se impirmira su ticket",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.value) {
+
+                    bonoServ.pagarBono(id).then(function (response) {
+                        if (!response.error) {
+                            Notification.success({ message: 'Se ha pagado con éxito', delay: 5000 });
+                            bonoServ.detalleBono(id).then(function (data) {
+                                $scope.bono = data;
+                                $scope.bono.Cliente.nombreCompleto = $scope.bono.Cliente.Nombres + ' ' + $scope.bono.Cliente.Apellidos;
+                                $scope.bono.NombreDestinoCompleto = $scope.bono.NombreDestino + ' ' + $scope.bono.ApellidoDestino;
+                                $scope.bono.montoRD = $scope.bono.Monto * $scope.bono.Tasa.Valor;
+                            });
+                        } else {
+                            Notification.error({ message: 'Ha ocurrido un error', positionY: 'bottom', delay: 5000 });
+                        }
                     });
-                });
-            }
+                }
+            })
         };
 
         $scope.imprimirTicket = function(id) {
-            var confirmar = $window.confirm("¿Seguro de querer imprimir el recibo?");
-            if (confirmar) {
+            Swal.fire({
+                title: '¿Seguro de querer imprimir el recibo?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
                 bonoServ.imprimirTicket(id);
-            }
+            });
         }
     });
 })();
