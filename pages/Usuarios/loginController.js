@@ -1,5 +1,5 @@
 'use strict';
-app.controller('loginController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
+app.controller('loginController', ['$scope', '$location', 'authService', 'Notification', function ($scope, $location, authService, Notification) {
 
     $scope.loginData = {
         userName: "",
@@ -16,9 +16,9 @@ app.controller('loginController', ['$scope', '$location', 'authService', functio
             $location.path('/bonos');
 
         },
-            function (err) {
-                $scope.message = "Usuario y/o Contraseña incorrecta";
-            });
+        function (err) {
+            Notification.error({ message: 'Usuario y/o contraseña incorrecta', positionY: 'bottom', delay: 5000 });
+        });
     };
 
 }]);
