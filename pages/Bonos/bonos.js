@@ -95,7 +95,7 @@
 
 
 
-    bonos.controller('bonoController', function($scope, bonoServ, localStorageService, $location, $window, Notification, $interval) {
+    bonos.controller('bonoController', function($scope, bonoServ, localStorageService, $location, $window, Notification, $interval, utilitiesServ) {
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
 
@@ -106,9 +106,7 @@
                 bonoServ.obtenerBonosPagados().then(function(data) {
                     $scope.bonosPagados = data;
                     $scope.bonosPagados.forEach(function(element) {
-                        // element.cliente.nombreCompleto = element.cliente.nombres + ' ' + element.cliente.apellidos;
-                        element.NombreDestinoCompleto = element.NombreDestino + ' ' + element.ApellidoDestino;
-                        element.MontoRd = element.Monto * element.Tasa.Valor;
+                        element.CedulaDestino = utilitiesServ.formatearCedula(element.CedulaDestino);
                     }, this);
 
                 });
@@ -121,6 +119,9 @@
             if (authData) {
                 bonoServ.obtenerBonos().then(function(data) {
                     $scope.bonos = data;
+                    $scope.bonos.forEach(function (element) {
+                        element.CedulaDestino = utilitiesServ.formatearCedula(element.CedulaDestino);
+                    }, this);
                 });
             } else {
                 $location.path('/login');
@@ -153,7 +154,9 @@
                         if (!response.error) {
                             Notification.success({ message: 'Se ha pagado con éxito', delay: 5000 });
                             bonoServ.obtenerBonos(authData).then(function(data) {
-                                $scope.bonos = data;
+                                $scope.bonos.forEach(function (element) {
+                                    element.CedulaDestino = utilitiesServ.formatearCedula(element.CedulaDestino);
+                                }, this);                                
                             });
                         } else {
                             Notification.error({ message: 'Ha ocurrido un error', positionY: 'bottom', delay: 5000 });
@@ -190,9 +193,6 @@
         bonoServ.detalleBono($stateParams.id).then(function(data) {
             $scope.bono = data;
             // $scope.bono.metodoPago = paypalService.getPayment($scope.bono.paypalId);
-            $scope.bono.Cliente.nombreCompleto = $scope.bono.Cliente.Nombres + ' ' + $scope.bono.Cliente.Apellidos;
-            $scope.bono.NombreDestinoCompleto = $scope.bono.NombreDestino + ' ' + $scope.bono.ApellidoDestino;
-            $scope.bono.montoRD = $scope.bono.Monto * $scope.bono.Tasa.Valor;
         });
 
         $scope.pagarBono = function(id) {
