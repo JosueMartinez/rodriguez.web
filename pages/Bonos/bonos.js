@@ -184,7 +184,7 @@
 
     });
 
-    bonos.controller('bonoDetalleController', function($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window) {
+    bonos.controller('bonoDetalleController', function($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window, utilitiesServ) {
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
         $scope.bono = {};
@@ -192,7 +192,10 @@
 
         bonoServ.detalleBono($stateParams.id).then(function(data) {
             $scope.bono = data;
-            // $scope.bono.metodoPago = paypalService.getPayment($scope.bono.paypalId);
+            $scope.bono.CedulaDestino = utilitiesServ.formatearCedula($scope.bono.CedulaDestino);
+            $scope.bono.CedulaRemitente = utilitiesServ.formatearCedula($scope.bono.CedulaRemitente);
+            $scope.bono.telefonoRemitente = utilitiesServ.formatearTelefono($scope.bono.telefonoRemitente);
+            $scope.bono.TelefonoDestino = utilitiesServ.formatearTelefono($scope.bono.TelefonoDestino);
         });
 
         $scope.pagarBono = function(id) {
