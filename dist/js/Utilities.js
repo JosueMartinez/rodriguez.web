@@ -20,6 +20,11 @@
             },
             formatearNumero: function(num) {
                 return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+            },
+            formatearTelefono: function(num) {
+                if(num)
+                    return num.substring(0, 3) + "-" + num.substring(3, 6) + "-" + num.substring(6);
+                return null;
             }
         };
 
