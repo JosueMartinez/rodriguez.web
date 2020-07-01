@@ -184,7 +184,7 @@
 
     });
 
-    bonos.controller('bonoDetalleController', function($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window, utilitiesServ) {
+    bonos.controller('bonoDetalleController', function($scope, $stateParams, bonoServ, $uibModal, localStorageService, $window, utilitiesServ, $location) {
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
         $scope.bono = {};
@@ -240,7 +240,11 @@
             }).then((result) => {
                 bonoServ.imprimirTicket(id);
             });
-        }
+        };
+
+        $scope.goto = function (page) {
+            $location.path(page);
+        };
     });
 })();
 
