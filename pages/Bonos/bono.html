@@ -55,7 +55,7 @@
             </div>
             <div ng-show="bono.EstadoBono === 'Cobrado'" class="row col-md-offset-1">
                 <button class="btn btn-primary btn-lg fa fa-list" ng-click="goto('.bonos')" style="margin-right:15px;"> Regresar</button>
-                <button class="btn btn-warning btn-lg fa fa-print" ng-click="imprimirTicket(bono.Id)" style="margin-right:15px;"> Imprimir Ticket</button>
+                <button class="btn btn-warning btn-lg fa fa-print" ng-click="imprimirTicket(bono.Id, true)" style="margin-right:15px;"> Imprimir Ticket</button>
             </div>
         </div>
         <!-- /.box-body -->
