@@ -99,22 +99,30 @@ u.controller('usuarioController', function ($scope, $uibModal, localStorageServi
     };
 
     $scope.borrarUsuario = function (id) {
-        console.log("TEST");
+        Swal.fire({
+            title: '¿Seguro de querer borrar este Usuario?',
+            text: "Esto no es reversible",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.value) { 
+                usuarioServ.borrarUsuario(id).then(function (response) {
+                    if (!response.error) {
+                        Notification.success({ message: 'Usuario borrado', delay: 5000 });
+                        usuarioServ.getUsuarios(authData).then(function (data) {
+                            $scope.usuarios = data;
+                        });
+                    } else {
+                        Notification.error({ message: 'No se ha podido borrrar el Usuario', positionY: 'bottom', delay: 5000 });
+                    }
 
-        var confirmar = $window.confirm("¿Seguro de querer borrar este Usuario?");
-        if (confirmar) {
-            usuarioServ.borrarUsuario(id).then(function (response) {
-                if (!response.error) {
-                    Notification.success({ message: 'Usuario borrado', delay: 5000 });
-                    usuarioServ.getUsuarios(authData).then(function (data) {
-                        $scope.usuarios = data;
-                    });
-                } else {
-                    Notification.error({ message: 'No se ha podido borrrar el Usuario', positionY: 'bottom', delay: 5000 });
-                }
-
-            });
-        }
+                });
+            }
+        });
     };
 });
 
@@ -128,13 +136,9 @@ u.controller('usuarioModalController', function ($uibModalInstance, usuarioServ,
         usuarioServ.createUsuarios(usuario).then(function (response) {
             if (!response.error) {
                 Notification.success({ message: 'Se ha creado el usuario ' , delay: 5000 });
-                // alert("Se ha creado el producto " + response.data.nombre);
-                // $scope.productos.push(response.data);
                 $uibModalInstance.close();
             } else {
                 Notification.error({ message: 'No se ha podido guardar el usuario', positionY: 'bottom', delay: 5000 });
-                // alert(response.data.Message);
-
             }
         })
     }
