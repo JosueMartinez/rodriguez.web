@@ -4,6 +4,8 @@
     //Servicio para bonos
     bonos.service('bonoServ', ['$http', 'settings', 'localStorageService', 'utilitiesServ', function($http, settings, localStorageService, utilitiesServ) {
 
+        var tabIndex = 0;
+
         var functions = {
             obtenerBonos: function() {
                 var authData = localStorageService.get('authorizationData');
@@ -85,6 +87,14 @@
                         return response;
                     });
                 }
+            },
+
+            setCurrentTab: function(tab){
+                tabIndex = tab;
+            },
+
+            getCurrentTab: function(){
+                return tabIndex;
             }
         }
 
@@ -128,7 +138,10 @@
         };
 
         //leida inicial
-        $scope.obtenerBonos();
+        $scope.activeTabIndex = bonoServ.getCurrentTab();   //necesario para cuando se regresa al listado desde detalle de bono
+        if($scope.activeTabIndex == 0){
+            $scope.obtenerBonos();
+        }
 
         //refresh cada 1 minuto
         $scope.intervalPromise = $interval(function() {
@@ -188,6 +201,7 @@
         $scope.pagina = "Bonos Emitidos";
         $scope.sitio = "Listado de bonos emitidos por clientes";
         $scope.bono = {};
+        // $scope.activeTabIndex = 0;
         var authData = localStorageService.get('authorizationData');
 
         bonoServ.detalleBono($stateParams.id).then(function(data) {
@@ -248,7 +262,8 @@
             }
         };
 
-        $scope.goto = function (page) {
+        $scope.goto = function (page, tabIndex) {
+            bonoServ.setCurrentTab(tabIndex);
             $location.path(page);
         };
     });

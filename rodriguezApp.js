@@ -23,7 +23,6 @@
        authService.fillAuthData();
 
        if (!authService.authentication.isAuth) {
-           console.log("NO ESTA LOGEADO");
            $location.path('/login');
        }
    }]);
