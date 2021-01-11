@@ -12,7 +12,7 @@
    });
 
    app.constant("settings", {
-        "baseUrl": "http://localhost:52643/api/",
+       "baseUrl": "http://josuemartinezzh-001-site1.ftempurl.com/api/",
         "port": "80",
         "PayPalApiUrl": "https://api.sandbox.paypal.com/v1/",
         "PayPalClientId": "AbpLXvsoTb4Qrd1qQbGl6QsllrYC-QSumRWB3rlM6nbBtx01ngomIDdiyF94lZaz47lVsY7Mt5MveM20",
