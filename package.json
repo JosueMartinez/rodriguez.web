@@ -4,7 +4,7 @@
   "description": "[Live Demo](https://josuemartinez.github.io/rodriguez.web/)",
   "main": "rodriguezApp.js",
   "dependencies": {
-    "http-server": "^0.11.1"
+    "http-server": "^0.11.2"
   },
   "devDependencies": {},
   "scripts": {
